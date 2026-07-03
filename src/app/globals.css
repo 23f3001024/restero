@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --crimson: #b71c1c;
+  --gold: #d4af37;
+  --cream: #fff4d6;
+  --charcoal: #1e1e1e;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smoothing */
+  overflow-x: clip; /* kill horizontal overflow without creating a scroll container */
+}
+
+body {
+  background: #ffffff;
+  color: var(--charcoal);
+  font-family: var(--font-poppins), sans-serif;
+  overflow-x: clip;
+  width: 100%;
+}
+
+/* Hide native cursor on desktop where the custom cursor takes over */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: var(--crimson);
+  color: var(--cream);
+}
+
+/* ---------- Luxury scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #fbf3e2;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d4af37, #a8862a);
+  border-radius: 9px;
+}
+
+/* ---------- Typography helpers ---------- */
+.font-display {
+  font-family: var(--font-playfair), serif;
+}
+.font-body {
+  font-family: var(--font-poppins), sans-serif;
+}
+.font-button {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(120deg, #a8862a 0%, #d4af37 40%, #f3e3a6 55%, #d4af37 70%, #a8862a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-crimson-gradient {
+  background: linear-gradient(120deg, #8e1414, #b71c1c 55%, #d32f2f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Thin engraved luxury label */
+.eyebrow {
+  font-family: var(--font-montserrat), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* ---------- Glassmorphism ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.glass-dark {
+  background: rgba(30, 30, 30, 0.35);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Shimmer (loader + accents) ---------- */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.15) 0%,
+    rgba(243, 227, 166, 0.9) 50%,
+    rgba(212, 175, 55, 0.15) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 2.4s linear infinite;
+}
+@keyframes shimmer-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- Steam ---------- */
+.steam {
+  position: absolute;
+  bottom: 100%;
+  width: 12px;
+  height: 90px;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  border-radius: 50%;
+  filter: blur(6px);
+  opacity: 0;
+  animation: steam-rise 4.5s ease-out infinite;
+}
+@keyframes steam-rise {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(-160px) scale(2);
+    opacity: 0;
+  }
+}
+
+/* ---------- Animated gold divider ---------- */
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37 20%, #e8ce7a 50%, #d4af37 80%, transparent);
+}
+
+/* ---------- Marquee ---------- */
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
