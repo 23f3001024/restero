@@ -2,7 +2,6 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import ScrollStory from "@/components/ScrollStory";
 import SignatureDishes from "@/components/SignatureDishes";
 import DiscoverPages from "@/components/DiscoverPages";
 import ScanToOrder from "@/components/ScanToOrder";
@@ -52,7 +51,6 @@ export default function Home() {
       <SmoothScroll>
         <main>
           <Hero />
-          <ScrollStory />
           <SignatureDishes />
           <DiscoverPages />
           <ScanToOrder />
