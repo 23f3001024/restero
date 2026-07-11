@@ -225,32 +225,39 @@ export type Testimonial = {
 
 export const testimonials: Testimonial[] = [
   {
-    name: "Aarav Mehta",
-    role: "Food Critic, The Plate",
+    name: "Karan Kumar",
+    role: "Foodie · Pune",
     quote:
-      "The Schezwan noodles arrived wreathed in wok smoke. One bite and the room went quiet. This is fine dining with real fire.",
+      "Absolutely bang on! The Schezwan noodles hit different — smoky, spicy and dangerously addictive. Already planning my next visit.",
     avatar: img("1633332755192-727a05c4013d", 200),
   },
   {
-    name: "Sofia Ricci",
-    role: "Travel Journalist",
+    name: "Nisha Singh",
+    role: "Regular Guest",
     quote:
-      "I have eaten across three continents this year. The Kung Pao chicken here is the single dish I keep dreaming about.",
+      "Best momos in Undri, hands down! Soft, juicy, and that fiery chutney is chef's kiss. Five stars just aren't enough.",
     avatar: img("1494790108377-be9c29b29330", 200),
   },
   {
-    name: "Rohan Kapoor",
-    role: "Regular Guest",
+    name: "Surbhi",
+    role: "Verified Diner",
     quote:
-      "Every visit feels like a celebration. The service is telepathic, the ambience is cinematic, and the chilli paneer is unreal.",
+      "Came for the Chilli Paneer, stayed for everything else. Bold flavours, quick service and vibes on point. 10 on 10!",
+    avatar: img("1438761681033-6461ffad8d80", 200),
+  },
+  {
+    name: "Siddhant",
+    role: "Google Review",
+    quote:
+      "The Kung Pao chicken is unreal — that perfect punch of nutty and spicy. Portions are generous and every bite slaps.",
     avatar: img("1507003211169-0a1dd7228f2d", 200),
   },
   {
-    name: "Ananya Sharma",
-    role: "Chef & Restaurateur",
+    name: "Lipika",
+    role: "Food Blogger",
     quote:
-      "Impeccable balance of heat, smoke and cream. As a chef, I rarely applaud a plate. Here I applauded twice.",
-    avatar: img("1438761681033-6461ffad8d80", 200),
+      "From the Pad Thai to the desserts, not a single miss. Cosy spot, warm staff and food that tastes like pure happiness.",
+    avatar: img("1544005313-94ddf0286df2", 200),
   },
 ];
 
