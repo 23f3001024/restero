@@ -18,9 +18,9 @@ const config: Config = {
           light: "#FFFAEC",
         },
         gold: {
-          DEFAULT: "#D4AF37",
-          light: "#E8CE7A",
-          deep: "#A8862A",
+          DEFAULT: "#F5C518",
+          light: "#FDE68A",
+          deep: "#C9971C",
         },
         charcoal: {
           DEFAULT: "#1E1E1E",
@@ -41,13 +41,13 @@ const config: Config = {
         "cream-glow":
           "radial-gradient(ellipse 80% 60% at 50% 0%, #FFFAEC 0%, #FFF4D6 45%, #FBE9C4 100%)",
         "gold-line":
-          "linear-gradient(90deg, transparent, #D4AF37 20%, #E8CE7A 50%, #D4AF37 80%, transparent)",
+          "linear-gradient(90deg, transparent, #F5C518 20%, #FDE68A 50%, #F5C518 80%, transparent)",
         "crimson-fade":
           "linear-gradient(135deg, #B71C1C 0%, #8E1414 100%)",
       },
       boxShadow: {
         luxe: "0 30px 80px -30px rgba(30,30,30,0.35)",
-        "luxe-gold": "0 20px 60px -25px rgba(212,175,55,0.45)",
+        "luxe-gold": "0 20px 60px -25px rgba(245,197,24,0.5)",
         glass: "0 8px 40px rgba(30,30,30,0.12)",
       },
       keyframes: {

@@ -27,7 +27,7 @@ export default function Booking() {
 
   const celebrate = () => {
     const end = Date.now() + 900;
-    const colors = ["#B71C1C", "#D4AF37", "#FFF4D6"];
+    const colors = ["#B71C1C", "#F5C518", "#FFF4D6"];
     (function frame() {
       confetti({ particleCount: 4, angle: 60, spread: 60, origin: { x: 0 }, colors });
       confetti({ particleCount: 4, angle: 120, spread: 60, origin: { x: 1 }, colors });

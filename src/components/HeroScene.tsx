@@ -53,7 +53,7 @@ function GoldRim() {
   return (
     <mesh position={[0, 0.93, 0]} rotation={[Math.PI / 2, 0, 0]}>
       <torusGeometry args={[1.36, 0.022, 24, 128]} />
-      <meshStandardMaterial color="#e8ce7a" metalness={1} roughness={0.18} envMapIntensity={1.4} />
+      <meshStandardMaterial color="#fde68a" metalness={1} roughness={0.18} envMapIntensity={1.4} />
     </mesh>
   );
 }
@@ -220,7 +220,7 @@ function Spices() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial size={0.05} color="#d4af37" transparent opacity={0.7} sizeAttenuation />
+      <pointsMaterial size={0.05} color="#f5c518" transparent opacity={0.7} sizeAttenuation />
     </points>
   );
 }

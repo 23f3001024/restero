@@ -51,7 +51,7 @@ function DishCard({ dish, index }: { dish: Dish; index: number }) {
             </span>
           )}
           {/* hover lighting sheen */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,175,55,0.35),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,197,24,0.4),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </div>
 
         <div className="flex flex-1 flex-col p-5">

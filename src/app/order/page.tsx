@@ -194,7 +194,7 @@ export default function OrderPage() {
     });
 
   const celebrate = () => {
-    const colors = ["#B71C1C", "#D4AF37", "#FFF4D6"];
+    const colors = ["#B71C1C", "#F5C518", "#FFF4D6"];
     confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 }, colors });
   };
 

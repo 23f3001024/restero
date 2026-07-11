@@ -62,7 +62,7 @@ export default function Cursor() {
             ? "scale-150 border-gold/80 bg-gold/10"
             : "border-crimson/40 bg-transparent"
         }`}
-        style={{ boxShadow: "0 0 30px rgba(212,175,55,0.25)" }}
+        style={{ boxShadow: "0 0 30px rgba(245,197,24,0.3)" }}
       />
     </>
   );
