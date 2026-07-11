@@ -66,7 +66,7 @@ export default function OurStory() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-7 font-body leading-relaxed text-muted">
-              It began with a single tandoor and a grandmother&apos;s recipe book.
+              It began with a single wok and a grandmother&apos;s recipe book.
               Three decades on, The House of Chilli N Curry has grown into a
               destination — yet every plate still carries the same devotion to
               spice, smoke and warmth that started it all.

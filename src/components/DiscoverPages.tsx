@@ -19,7 +19,7 @@ const CARDS = [
   {
     href: "/menu",
     label: "The Menu",
-    copy: "Tandoor, wok & dum — explore every plate.",
+    copy: "Wok-fired, spicy & bold — explore every plate.",
     image: img("1633945274405-b6c8069047b0"),
     span: "",
   },

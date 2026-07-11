@@ -65,10 +65,12 @@ function DishCard({ dish, index }: { dish: Dish; index: number }) {
             {dish.desc}
           </p>
           <button
-            onClick={() => router.push("/order")}
+            onClick={() =>
+              router.push(`/order?add=${encodeURIComponent(dish.menuName ?? dish.name)}`)
+            }
             className="mt-5 flex items-center justify-center gap-2 rounded-full border border-charcoal/15 py-3 font-button text-[0.7rem] font-semibold uppercase tracking-wider2 text-charcoal transition-colors duration-300 hover:border-crimson hover:bg-crimson hover:text-cream"
           >
-            <Plus size={14} /> Order
+            <Plus size={14} /> Add to Order
           </button>
         </div>
       </motion.div>

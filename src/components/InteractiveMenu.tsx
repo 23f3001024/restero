@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { Plus } from "lucide-react";
 import SmartImage from "./ui/SmartImage";
 import SectionLabel from "./ui/SectionLabel";
 import { Reveal } from "./ui/Reveal";
 import { menu, menuCategories, type MenuCategory } from "@/lib/data";
 
 export default function InteractiveMenu() {
-  const [active, setActive] = useState<MenuCategory>("Indian");
+  const [active, setActive] = useState<MenuCategory>("Starters");
   const items = menu.filter((m) => m.category === active);
 
   return (
@@ -64,33 +66,59 @@ export default function InteractiveMenu() {
                 transition={{ delay: i * 0.06 }}
                 className="group relative w-[80vw] shrink-0 overflow-hidden rounded-[1.8rem] shadow-glass [scroll-snap-align:center] sm:w-[22rem]"
               >
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <SmartImage
-                    src={item.image}
-                    alt={item.name}
-                    fill
-                    sizes="(max-width: 640px) 80vw, 22rem"
-                    className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <div className="flex items-end justify-between gap-3">
-                      <div>
-                        <h3 className="font-display text-2xl text-cream">{item.name}</h3>
-                        <p className="mt-1 font-body text-sm text-cream/70">{item.desc}</p>
+                <Link
+                  href={`/order?add=${encodeURIComponent(item.name)}`}
+                  aria-label={`Add ${item.name} to your order`}
+                  className="block"
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden">
+                    <SmartImage
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      sizes="(max-width: 640px) 80vw, 22rem"
+                      className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent" />
+
+                    {/* order cue */}
+                    <span className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-gold px-3 py-1.5 font-button text-[0.6rem] font-bold uppercase tracking-wider2 text-charcoal shadow-luxe-gold transition-transform duration-300 group-hover:scale-105">
+                      <Plus size={13} strokeWidth={3} /> Add to Order
+                    </span>
+
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <div className="flex items-end justify-between gap-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`grid h-4 w-4 shrink-0 place-items-center rounded-[3px] border ${
+                                item.veg ? "border-green-500" : "border-red-500"
+                              }`}
+                              aria-label={item.veg ? "Vegetarian" : "Non-vegetarian"}
+                            >
+                              <span
+                                className={`h-2 w-2 rounded-full ${
+                                  item.veg ? "bg-green-500" : "bg-red-500"
+                                }`}
+                              />
+                            </span>
+                            <h3 className="font-display text-2xl text-cream">{item.name}</h3>
+                          </div>
+                          <p className="mt-1 font-body text-sm text-cream/70">{item.desc}</p>
+                        </div>
+                        <span className="rounded-full bg-gold px-3 py-1 font-display text-sm font-bold text-charcoal">
+                          {item.price}
+                        </span>
                       </div>
-                      <span className="rounded-full bg-gold px-3 py-1 font-display text-sm font-bold text-charcoal">
-                        {item.price}
-                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               </motion.article>
             ))}
           </motion.div>
         </AnimatePresence>
         <p className="mt-2 text-center font-button text-[0.6rem] uppercase tracking-luxe text-muted">
-          ← Drag / scroll to explore →
+          ← Drag to explore · tap a dish to order →
         </p>
       </div>
     </section>

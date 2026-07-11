@@ -9,7 +9,7 @@ import { img } from "@/lib/data";
 export const metadata: Metadata = {
   title: "The Menu",
   description:
-    "Explore our North Indian, Mughlai, Tandoori, Biryani, Indo-Chinese, dessert and mocktail menu — crafted with the finest ingredients.",
+    "Explore our Indo-Chinese and Pan-Asian menu — Schezwan, Thai curries, wok-fired noodles, momos, quick bites and desserts, crafted with the finest ingredients.",
 };
 
 export default function MenuPage() {
@@ -19,7 +19,7 @@ export default function MenuPage() {
         eyebrow="Crafted Daily"
         title="The"
         accent="Menu"
-        subtitle="Signature plates and house favourites across tandoor, wok and dum — each one a reason to return."
+        subtitle="Signature plates and house favourites fresh from the wok — each one a reason to return."
         image={img("1633945274405-b6c8069047b0", 2000)}
         crumb="Menu"
       />

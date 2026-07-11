@@ -9,7 +9,7 @@ import { img } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Our Story",
   description:
-    "From a single tandoor and a grandmother's recipe book to a luxury dining destination — the story of The House of Chilli N Curry.",
+    "From a single wok and a grandmother's recipe book to a luxury dining destination — the story of The House of Chilli N Curry.",
 };
 
 export default function AboutPage() {

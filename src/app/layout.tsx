@@ -11,13 +11,13 @@ export const metadata: Metadata = {
     template: "%s · The House of Chilli N Curry",
   },
   description:
-    "A luxury Indian & Indo-Chinese dining destination. Authentic North Indian, Mughlai, Tandoori, Biryani and Indo-Chinese cuisine crafted with passion, tradition and elegance.",
+    "A luxury Indo-Chinese & Pan-Asian dining destination. Bold Schezwan, Thai curries, wok-fired noodles, momos and more — crafted with passion, fire and elegance.",
   keywords: [
-    "luxury Indian restaurant",
-    "Indo-Chinese fine dining",
-    "biryani",
-    "tandoori",
-    "Mughlai cuisine",
+    "luxury Indo-Chinese restaurant",
+    "Pan-Asian fine dining",
+    "Thai curry",
+    "schezwan",
+    "wok-fired noodles",
     "The House of Chilli N Curry",
   ],
   openGraph: {

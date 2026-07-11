@@ -8,17 +8,23 @@ import {
   type OrderInput,
   type OrderStatus,
 } from "@/lib/orders";
+import { isStaffAuthed } from "@/lib/staff";
 
-// Kitchen dashboard reads live orders.
+const unauthorized = () =>
+  NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+
+// Kitchen dashboard reads live orders. Staff-only.
 export async function GET() {
+  if (!isStaffAuthed()) return unauthorized();
   return NextResponse.json(
     { orders: listOrders() },
     { headers: { "Cache-Control": "no-store" } },
   );
 }
 
-// Kitchen dashboard advances / cancels an order.
+// Kitchen dashboard advances / cancels an order. Staff-only.
 export async function PATCH(req: Request) {
+  if (!isStaffAuthed()) return unauthorized();
   let body: { id?: string; status?: OrderStatus };
   try {
     body = await req.json();
@@ -56,5 +62,6 @@ export async function POST(req: Request) {
     name: order.name,
     paymentMethod: order.payment?.method ?? null,
     paymentStatus: order.payment?.status ?? "pending",
+    paymentReference: order.payment?.reference ?? null,
   });
 }

@@ -38,7 +38,9 @@ export default function Footer() {
             <p className="mt-4 font-body text-sm leading-relaxed text-cream/60">
               {BRAND.address}
             </p>
-            <p className="mt-3 font-body text-sm text-cream/60">{BRAND.phone}</p>
+            <p className="mt-3 font-body text-sm text-cream/60">
+              {BRAND.phone} · {BRAND.phone2}
+            </p>
           </div>
 
           <div>
@@ -124,6 +126,9 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-8 pb-28 text-center sm:flex-row sm:text-left lg:pb-8">
           <p className="font-body text-xs text-cream/50">
             © {new Date().getFullYear()} {BRAND.name}. All rights reserved.
+            <span className="mt-1 block text-cream/40">
+              FSSAI Lic. No. {BRAND.fssai}
+            </span>
           </p>
           <div className="flex gap-6">
             <a href="#" className="font-body text-xs text-cream/50 transition-colors hover:text-gold">

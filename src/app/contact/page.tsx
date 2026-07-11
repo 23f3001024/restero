@@ -7,7 +7,7 @@ import { img } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Visit Us",
   description:
-    "Find your way to The House of Chilli N Curry — address, hours, phone and reservations in New Delhi.",
+    "Find your way to The House of Chilli N Curry — address, hours, phone and reservations in Undri, Pune.",
 };
 
 export default function ContactPage() {

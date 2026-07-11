@@ -5,10 +5,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const LINES = [
-  "Coal is lit before dawn.",
-  "Spices are pounded by hand.",
-  "Basmati rests in saffron milk.",
-  "And the tandoor begins to breathe.",
+  "The flame is lit before dawn.",
+  "Chillies are pounded by hand.",
+  "Ginger and garlic hit the oil.",
+  "And the wok begins to breathe.",
 ];
 
 export default function ScrollStory() {

@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import { Printer, ScanLine } from "lucide-react";
 import { BRAND } from "@/lib/data";
+import PinGate from "@/components/PinGate";
 
-export default function TablesPage() {
+function TableTools() {
   const [count, setCount] = useState(12);
   const [qrs, setQrs] = useState<string[]>([]);
   const [origin, setOrigin] = useState("");
@@ -118,5 +119,13 @@ export default function TablesPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+export default function TablesPage() {
+  return (
+    <PinGate title="Table QR Tools">
+      <TableTools />
+    </PinGate>
   );
 }

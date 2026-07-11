@@ -7,7 +7,12 @@
 export type OrderLine = { name: string; price: number; qty: number };
 
 export type PaymentMethod = "upi" | "card" | "counter";
-export type Payment = { method: PaymentMethod; status: "paid" | "pending" };
+export type Payment = {
+  method: PaymentMethod;
+  status: "paid" | "pending";
+  /** UPI transaction / UTR reference the guest pasted after paying. */
+  reference?: string;
+};
 
 export type OrderInput = {
   name: string;
@@ -43,8 +48,10 @@ export const ORDER_STATUSES: OrderStatus[] = [
 
 const store = new Map<string, Order>();
 
+// Uses the first (base) price so multi-price items like "₹299 / 349 / 399"
+// don't collapse into a single concatenated number.
 export const priceToNumber = (price: string) =>
-  Number(price.replace(/[^\d.]/g, "")) || 0;
+  Number(price.match(/[\d.]+/)?.[0]) || 0;
 
 function makeOrderId() {
   const stamp = Date.now().toString(36).toUpperCase().slice(-4);

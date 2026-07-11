@@ -13,6 +13,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import type { Order, OrderStatus } from "@/lib/orders";
+import PinGate from "@/components/PinGate";
 
 type Column = {
   key: OrderStatus;
@@ -50,7 +51,7 @@ function minutesAgo(iso: string) {
   return Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 60000));
 }
 
-export default function KitchenPage() {
+function KitchenBoard() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
   const [sound, setSound] = useState(true);
@@ -267,6 +268,15 @@ export default function KitchenPage() {
                             </span>
                           </div>
 
+                          {o.payment?.method === "upi" && o.payment.reference && (
+                            <p className="mt-2 font-body text-[0.65rem] text-cream/45">
+                              UPI Ref:{" "}
+                              <span className="font-semibold text-cream/70">
+                                {o.payment.reference}
+                              </span>
+                            </p>
+                          )}
+
                           <div className="mt-4 flex gap-2">
                             {col.next && (
                               <button
@@ -307,5 +317,13 @@ export default function KitchenPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+export default function KitchenPage() {
+  return (
+    <PinGate title="Kitchen Display">
+      <KitchenBoard />
+    </PinGate>
   );
 }

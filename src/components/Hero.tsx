@@ -9,7 +9,7 @@ import { SplitReveal } from "./ui/Reveal";
 import SmartImage from "./ui/SmartImage";
 import { BRAND, img } from "@/lib/data";
 
-const HERO_IMG = img("1633945274405-b6c8069047b0", 2000, 82);
+const HERO_IMG = img("1552611052-33e04de081de", 2000, 82);
 
 export default function Hero() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function Hero() {
       <motion.div style={{ scale: imgScale, y: imgY }} className="absolute inset-0">
         <SmartImage
           src={HERO_IMG}
-          alt="Signature dish at The House of Chilli N Curry"
+          alt="Signature noodles at The House of Chilli N Curry"
           fill
           priority
           sizes="100vw"
@@ -72,15 +72,14 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.9 }}
-            className="mb-6 flex items-center justify-center gap-4 sm:justify-start"
+            className="mb-5 flex items-center justify-center sm:justify-start"
           >
-            <span className="h-px w-10 bg-gold/70" />
-            <span className="font-button text-[0.68rem] font-semibold uppercase tracking-luxe text-gold sm:text-[0.75rem]">
+            <span className="font-button text-[0.7rem] font-bold uppercase tracking-wider2 text-gold-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] sm:text-[0.92rem]">
               {BRAND.name}
             </span>
           </motion.div>
 
-          <h1 className="font-display text-[2.9rem] font-semibold leading-[1.02] text-cream sm:text-6xl lg:text-7xl">
+          <h1 className="font-display text-[2.35rem] font-semibold leading-[1.06] text-cream xs:text-5xl sm:text-6xl lg:text-7xl">
             <SplitReveal text="Where Every Bite" />
             <br />
             <span className="text-gold-gradient italic">
@@ -92,24 +91,28 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1, duration: 1 }}
-            className="mx-auto mt-7 max-w-xl font-body text-base leading-relaxed text-cream/75 sm:mx-0 sm:text-lg"
+            className="mx-auto mt-5 max-w-xl font-body text-[0.95rem] leading-relaxed text-cream/75 sm:mx-0 sm:mt-7 sm:text-lg"
           >
-            Experience authentic Indian and Indo-Chinese cuisine crafted with
-            passion, tradition and luxury — in a setting made for celebration.
+            Experience bold Indo-Chinese and Pan-Asian cuisine crafted with
+            fire, flavour and luxury — in a setting made for celebration.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3, duration: 0.9 }}
-            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-start"
+            className="mt-8 flex w-full flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:items-center sm:justify-start sm:gap-4"
           >
-            <MagneticButton variant="gold" onClick={() => router.push("/reserve")}>
+            <MagneticButton
+              variant="gold"
+              className="w-full justify-center sm:w-auto"
+              onClick={() => router.push("/reserve")}
+            >
               Reserve a Table <ArrowRight size={16} />
             </MagneticButton>
             <MagneticButton
               variant="outline"
-              className="!border-cream/40 !text-cream"
+              className="w-full justify-center !border-cream/40 !text-cream sm:w-auto"
               onClick={() => router.push("/menu")}
             >
               <UtensilsCrossed size={16} /> Explore Menu
@@ -121,11 +124,11 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.6, duration: 1 }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-button text-[0.62rem] uppercase tracking-wider2 text-cream/50 sm:justify-start"
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-button text-[0.58rem] uppercase tracking-wider2 text-cream/50 sm:mt-12 sm:gap-x-5 sm:text-[0.62rem] sm:justify-start"
           >
-            {["North Indian", "Mughlai", "Tandoori", "Biryani", "Indo-Chinese"].map(
+            {["Indo-Chinese", "Schezwan", "Thai", "Wok-Fired", "Pan-Asian"].map(
               (c, i) => (
-                <span key={c} className="flex items-center gap-5">
+                <span key={c} className="flex items-center gap-3 sm:gap-5">
                   {i > 0 && <span className="text-gold/60">✦</span>}
                   {c}
                 </span>

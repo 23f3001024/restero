@@ -1,14 +1,14 @@
 "use client";
 
 const WORDS = [
-  "Tandoori",
-  "Biryani",
-  "Mughlai",
-  "Kebabs",
   "Indo-Chinese",
+  "Schezwan",
+  "Thai Curry",
+  "Wok-Fired",
+  "Noodles",
+  "Momos",
   "Seafood",
   "Vegetarian",
-  "Mocktails",
   "Desserts",
 ];
 

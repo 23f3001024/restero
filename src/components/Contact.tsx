@@ -1,12 +1,12 @@
 "use client";
 
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook } from "lucide-react";
+import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
 import SectionLabel from "./ui/SectionLabel";
 import { Reveal } from "./ui/Reveal";
 import { BRAND } from "@/lib/data";
 
 const MAP_SRC =
-  "https://www.openstreetmap.org/export/embed.html?bbox=77.19%2C28.61%2C77.25%2C28.65&layer=mapnik&marker=28.6315%2C77.2197";
+  "https://www.openstreetmap.org/export/embed.html?bbox=73.9082%2C18.4386%2C73.9242%2C18.4506&layer=mapnik&marker=18.4446324%2C73.9161625";
 
 export default function Contact() {
   return (
@@ -36,9 +36,8 @@ export default function Contact() {
             <div className="flex h-full flex-col justify-between gap-6 rounded-[2rem] bg-white p-8 shadow-glass sm:p-10">
               <div className="space-y-6">
                 {[
-                  { Icon: MapPin, label: "Address", value: BRAND.address },
-                  { Icon: Phone, label: "Reservations", value: BRAND.phone, href: `tel:${BRAND.phone.replace(/\s/g, "")}` },
-                  { Icon: Mail, label: "Email", value: BRAND.email, href: `mailto:${BRAND.email}` },
+                  { Icon: MapPin, label: "Address", value: BRAND.address, href: BRAND.mapUrl },
+                  { Icon: Phone, label: "Reservations", value: `${BRAND.phone} · ${BRAND.phone2}`, href: `tel:${BRAND.phone.replace(/\s/g, "")}` },
                 ].map(({ Icon, label, value, href }) => (
                   <div key={label} className="flex items-start gap-4">
                     <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-crimson/10 text-crimson">
@@ -49,7 +48,12 @@ export default function Contact() {
                         {label}
                       </p>
                       {href ? (
-                        <a href={href} className="font-body text-charcoal transition-colors hover:text-crimson">
+                        <a
+                          href={href}
+                          target={href.startsWith("http") ? "_blank" : undefined}
+                          rel={href.startsWith("http") ? "noreferrer" : undefined}
+                          className="font-body text-charcoal transition-colors hover:text-crimson"
+                        >
                           {value}
                         </a>
                       ) : (

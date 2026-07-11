@@ -13,18 +13,18 @@ export const BRAND = {
   name: "The House of Chilli N Curry",
   short: "Chilli N Curry",
   tagline: "Where Every Bite is an Experience.",
-  phone: "+91 98765 43210",
-  email: "reservations@houseofchillincurry.com",
-  address: "42 Saffron Boulevard, Connaught Place, New Delhi 110001",
-  hours: [
-    { day: "Monday – Thursday", time: "12:00 PM – 11:00 PM" },
-    { day: "Friday – Saturday", time: "12:00 PM – 12:30 AM" },
-    { day: "Sunday", time: "11:00 AM – 11:00 PM" },
-  ],
+  phone: "+91 99879 30956",
+  phone2: "+91 79790 72778",
+  address: "Shop C-07, Dynamic Grandeur, Wadachiwadi, Undri, Pune 411060",
+  fssai: "21525079004488",
+  mapUrl: "https://maps.app.goo.gl/gAkPULuxYDL8issx5",
+  upiId: "houseofchili@idfcbank",
+  upiName: "The House of Chilli N Curry",
+  hours: [{ day: "Monday – Sunday", time: "12:00 PM onwards" }],
   socials: {
     instagram: "https://instagram.com",
     facebook: "https://facebook.com",
-    whatsapp: "https://wa.me/919876543210",
+    whatsapp: "https://wa.me/919987930956",
   },
 };
 
@@ -34,64 +34,68 @@ export type Dish = {
   price: string;
   image: string;
   tag?: string;
+  /** Exact menu item name for the /order?add= link, when it differs from the display name. */
+  menuName?: string;
 };
 
 export const signatureDishes: Dish[] = [
   {
-    name: "Butter Chicken",
-    desc: "Tandoor-charred chicken folded into a velvet tomato-fenugreek gravy finished with cultured butter.",
-    price: "₹620",
-    image: img("1585937421612-70a008356fbe"),
-    tag: "House Classic",
-  },
-  {
-    name: "Chicken Biryani",
-    desc: "Aged basmati sealed with saffron, slow-dum cooked over coal with hand-pounded garam masala.",
-    price: "₹580",
-    image: img("1633945274405-b6c8069047b0"),
-    tag: "Slow Dum",
-  },
-  {
-    name: "Paneer Lababdar",
-    desc: "Cottage cheese in a silken cashew-tomato reduction, kissed with kasuri methi and cream.",
-    price: "₹540",
+    name: "Chilly Paneer",
+    desc: "Golden paneer wok-tossed in fiery chilli-soy magic — vibrant, glossy and delicious.",
+    price: "₹249",
     image: img("1631452180519-c014fe946bc7"),
-    tag: "Vegetarian",
+    tag: "Veg",
   },
   {
-    name: "Dragon Chicken",
-    desc: "Crisp chilli-glazed chicken tossed with roasted cashews, scallion and Szechuan heat.",
-    price: "₹560",
+    name: "Chicken 65",
+    desc: "Spicy, crispy and legendary — bite-sized chicken fried to a fiery South-Indian crunch.",
+    price: "₹249",
+    image: img("1562967914-608f82629710"),
+    tag: "Non-Veg",
+  },
+  {
+    name: "Paneer 65",
+    desc: "A legendary South Indian spice burst — crisp cottage cheese in a punchy red glaze.",
+    price: "₹199",
+    image: img("1606491956689-2ea866880c84"),
+    tag: "Veg",
+  },
+  {
+    name: "Kung Pao Chicken",
+    desc: "Nutty, spicy and irresistible — wok-charred chicken with cashews and dried chillies.",
+    price: "₹349",
     image: img("1603894584373-5ac82b2ae398"),
-    tag: "Indo-Chinese",
+    tag: "Non-Veg",
+    menuName: "Kung Pao (Chicken)",
   },
   {
-    name: "Chicken Tikka",
-    desc: "Hung-curd marinated morsels lacquered in the tandoor until smoke-kissed and blushing.",
-    price: "₹520",
-    image: img("1599487488170-d11ec9c172f0"),
-    tag: "From the Tandoor",
+    name: "Honey Chilly Potato",
+    desc: "Crisp golden bites glazed with sweet-spice — the crunchiest way to start.",
+    price: "₹249",
+    image: img("1630384060421-cb20d0e0649d"),
+    tag: "Veg",
   },
   {
-    name: "Dal Makhani",
-    desc: "Black urad simmered overnight on slow coals, mounted with butter and finished with cream.",
-    price: "₹480",
-    image: img("1546833999-b9f581a1996d"),
-    tag: "Overnight",
+    name: "Schezwan Noodles",
+    desc: "Spicy, smoky and full of punch — hand-tossed noodles in a bold schezwan wok toss.",
+    price: "₹249",
+    image: img("1569718212165-3a8278d5f624"),
+    tag: "Veg",
   },
   {
-    name: "Garlic Naan",
-    desc: "Blistered clay-oven flatbread brushed with roasted garlic, coriander and clarified butter.",
-    price: "₹120",
-    image: img("1601050690597-df0568f70950"),
-    tag: "Clay Oven",
+    name: "Thai Basil Chicken",
+    desc: "Aromatic Thai flavours, rich and balanced — chicken simmered with holy basil.",
+    price: "₹349",
+    image: img("1614777986387-015c2a89b696"),
+    tag: "Non-Veg",
+    menuName: "Thai Basil Chicken / Fish / Prawn",
   },
   {
-    name: "Chilli Paneer",
-    desc: "Golden paneer wok-tossed in a glossy chilli-soy glaze with peppers and toasted sesame.",
-    price: "₹500",
-    image: img("1596797038530-2c107229654b"),
-    tag: "Indo-Chinese",
+    name: "Padd Thai Noodles",
+    desc: "Savoury, wok-tossed noodles with sweet-sour depth and a nutty finish.",
+    price: "₹299",
+    image: img("1573080496219-bb080dd4f877"),
+    tag: "Veg",
   },
 ];
 
@@ -101,50 +105,106 @@ export type MenuItem = {
   price: string;
   image: string;
   category: MenuCategory;
+  veg: boolean;
 };
 
 export type MenuCategory =
-  | "Indian"
-  | "Chinese"
-  | "Tandoor"
-  | "Biryani"
-  | "Desserts"
-  | "Mocktails";
+  | "Starters"
+  | "Mains"
+  | "Rice & Noodles"
+  | "Combos"
+  | "Quick Bites"
+  | "Beverages"
+  | "Desserts";
 
 export const menuCategories: MenuCategory[] = [
-  "Indian",
-  "Chinese",
-  "Tandoor",
-  "Biryani",
+  "Starters",
+  "Mains",
+  "Rice & Noodles",
+  "Combos",
+  "Quick Bites",
+  "Beverages",
   "Desserts",
-  "Mocktails",
 ];
 
 export const menu: MenuItem[] = [
-  { category: "Indian", name: "Rogan Josh", desc: "Kashmiri lamb, ratan jot, fennel.", price: "₹690", image: img("1585937421612-70a008356fbe", 900) },
-  { category: "Indian", name: "Paneer Lababdar", desc: "Cashew-tomato, kasuri methi.", price: "₹540", image: img("1631452180519-c014fe946bc7", 900) },
-  { category: "Indian", name: "Dal Makhani", desc: "Overnight black urad, butter.", price: "₹480", image: img("1546833999-b9f581a1996d", 900) },
-  { category: "Chinese", name: "Dragon Chicken", desc: "Chilli glaze, cashew, scallion.", price: "₹560", image: img("1603894584373-5ac82b2ae398", 900) },
-  { category: "Chinese", name: "Chilli Paneer", desc: "Chilli-soy glaze, sesame.", price: "₹500", image: img("1596797038530-2c107229654b", 900) },
-  { category: "Chinese", name: "Hakka Noodles", desc: "Wok-tossed, garden greens.", price: "₹420", image: img("1585032226651-759b368d7246", 900) },
-  { category: "Tandoor", name: "Chicken Tikka", desc: "Hung curd, smoke-kissed.", price: "₹520", image: img("1599487488170-d11ec9c172f0", 900) },
-  { category: "Tandoor", name: "Seekh Kebab", desc: "Minced lamb, coal-grilled.", price: "₹580", image: img("1509722747041-616f39b57569", 900) },
-  { category: "Tandoor", name: "Tandoori Prawns", desc: "Ajwain, saffron, lime.", price: "₹740", image: img("1625944230945-1b7dd3b949ab", 900) },
-  { category: "Biryani", name: "Chicken Biryani", desc: "Saffron, coal-dum basmati.", price: "₹580", image: img("1633945274405-b6c8069047b0", 900) },
-  { category: "Biryani", name: "Lamb Biryani", desc: "Slow lamb shank, aged rice.", price: "₹680", image: img("1563379091339-03b21ab4a4f8", 900) },
-  { category: "Biryani", name: "Subz Biryani", desc: "Garden vegetables, mint.", price: "₹460", image: img("1596797038530-2c107229654b", 900) },
-  { category: "Desserts", name: "Shahi Tukda", desc: "Saffron rabri, gold leaf.", price: "₹280", image: img("1551024601-bec78aea704b", 900) },
-  { category: "Desserts", name: "Gulab Jamun", desc: "Warm, rose, cardamom.", price: "₹240", image: img("1606313564200-e75d5e30476c", 900) },
-  { category: "Desserts", name: "Kulfi Falooda", desc: "Pistachio, vermicelli, rose.", price: "₹260", image: img("1488900128323-21503983a07e", 900) },
-  { category: "Mocktails", name: "Saffron Sunset", desc: "Saffron, orange, soda.", price: "₹320", image: img("1544145945-f90425340c7e", 900) },
-  { category: "Mocktails", name: "Rose Kisses", desc: "Rose, lychee, lime.", price: "₹300", image: img("1536935338788-846bb9981813", 900) },
-  { category: "Mocktails", name: "Mint Monsoon", desc: "Mint, cucumber, tonic.", price: "₹300", image: img("1513558161293-cdaf765ed2fd", 900) },
+  // ---- Starters ----
+  { category: "Starters", veg: true, name: "Sweet Corn Soup", desc: "Gentle warmth, creamy and comforting.", price: "₹119", image: img("1547592166-23ac45744acd", 900) },
+  { category: "Starters", veg: true, name: "Hot & Sour Soup", desc: "Tangy spice with a lively kick.", price: "₹119", image: img("1547592166-23ac45744acd", 900) },
+  { category: "Starters", veg: true, name: "Cottage Cheese in Hot Basil Sauce", desc: "Silken paneer kissed with basil heat.", price: "₹199", image: img("1631452180519-c014fe946bc7", 900) },
+  { category: "Starters", veg: true, name: "Stir Fried Vegetable", desc: "Garden freshness, wok-tossed to perfection.", price: "₹149", image: img("1625944230945-1b7dd3b949ab", 900) },
+  { category: "Starters", veg: true, name: "Veg Manchurian", desc: "Saucy Indo-Chinese indulgence.", price: "₹149", image: img("1596797038530-2c107229654b", 900) },
+  { category: "Starters", veg: true, name: "Paneer 65", desc: "Legendary South Indian spice burst.", price: "₹199", image: img("1631452180519-c014fe946bc7", 900) },
+  { category: "Starters", veg: true, name: "Honey Chilly Potato", desc: "Crisp golden bites glazed with sweet spice.", price: "₹249", image: img("1630384060421-cb20d0e0649d", 900) },
+  { category: "Starters", veg: true, name: "Crispy Veg", desc: "Golden crunch, delicately seasoned.", price: "₹249", image: img("1606491956689-2ea866880c84", 900) },
+  { category: "Starters", veg: false, name: "Chicken Clear Soup", desc: "Light broth, delicate and nourishing.", price: "₹149", image: img("1547592166-23ac45744acd", 900) },
+  { category: "Starters", veg: false, name: "Hot & Sour Soup (Chicken)", desc: "Tangy spice with a hearty chicken twist.", price: "₹149", image: img("1547592166-23ac45744acd", 900) },
+  { category: "Starters", veg: false, name: "Crispy Chicken", desc: "Crunch outside, tender inside.", price: "₹249", image: img("1562967914-608f82629710", 900) },
+  { category: "Starters", veg: false, name: "Chicken Manchurian", desc: "Classic Indo-Chinese comfort.", price: "₹249", image: img("1603894584373-5ac82b2ae398", 900) },
+  { category: "Starters", veg: false, name: "Chicken 65", desc: "Spicy, crispy, legendary.", price: "₹249", image: img("1562967914-608f82629710", 900) },
+
+  // ---- Mains ----
+  { category: "Mains", veg: true, name: "Black Pepper Mushroom / Paneer", desc: "Bold pepper warmth with tender texture.", price: "₹249", image: img("1596797038530-2c107229654b", 900) },
+  { category: "Mains", veg: true, name: "Chilly Paneer", desc: "Fiery wok magic, vibrant and delicious.", price: "₹249", image: img("1631452180519-c014fe946bc7", 900) },
+  { category: "Mains", veg: true, name: "Garlic Basil Special", desc: "Fragrant herbs with a garlicky punch!", price: "₹249", image: img("1625944230945-1b7dd3b949ab", 900) },
+  { category: "Mains", veg: false, name: "Black Pepper Chicken", desc: "Juicy bites with a peppery punch.", price: "₹249", image: img("1544025162-d76694265947", 900) },
+  { category: "Mains", veg: false, name: "Chilly Chicken / Fish / Prawn", desc: "Fiery wok magic, bursting with flavor.", price: "₹299 / 349 / 399", image: img("1603894584373-5ac82b2ae398", 900) },
+  { category: "Mains", veg: false, name: "Garlic Basil Special (Chicken)", desc: "Fragrant herbs with a garlicky punch.", price: "₹349", image: img("1603894584373-5ac82b2ae398", 900) },
+  { category: "Mains", veg: false, name: "Kung Pao (Chicken)", desc: "Nutty, spicy, and irresistible.", price: "₹349", image: img("1603894584373-5ac82b2ae398", 900) },
+  { category: "Mains", veg: false, name: "Lemon Grass Chicken / Prawn", desc: "Zesty lemongrass with smoky paprika.", price: "₹349 / 449", image: img("1559737558-2f5a35f4523b", 900) },
+  { category: "Mains", veg: false, name: "Thai Basil Chicken / Fish / Prawn", desc: "Aromatic Thai flavors, rich and balanced.", price: "₹349 / 399 / 449", image: img("1614777986387-015c2a89b696", 900) },
+  { category: "Mains", veg: false, name: "Ginger Soya Chicken", desc: "Earthy soy with a ginger zing.", price: "₹299", image: img("1544025162-d76694265947", 900) },
+  { category: "Mains", veg: false, name: "Chicken in Teriyaki Sauce", desc: "Sweet-savory Japanese glaze.", price: "₹349", image: img("1544025162-d76694265947", 900) },
+
+  // ---- Rice & Noodles ----
+  { category: "Rice & Noodles", veg: true, name: "Schezwan Rice", desc: "Fiery rice with a wok-tossed twist.", price: "₹249", image: img("1596560548464-f010549b84d7", 900) },
+  { category: "Rice & Noodles", veg: true, name: "Chilly Garlic Fried Rice", desc: "Garlic heat meets fluffy grains.", price: "₹249", image: img("1603133872878-684f208fb84b", 900) },
+  { category: "Rice & Noodles", veg: true, name: "Hakka Noodles", desc: "Street-style stir-fried perfection.", price: "₹249", image: img("1569718212165-3a8278d5f624", 900) },
+  { category: "Rice & Noodles", veg: true, name: "Chilly Garlic Noodles", desc: "Fiery garlic kick in every strand!", price: "₹249", image: img("1626509653291-18d9a934b9db", 900) },
+  { category: "Rice & Noodles", veg: true, name: "Schezwan Noodles", desc: "Spicy, smoky, full of punch.", price: "₹249", image: img("1573080496219-bb080dd4f877", 900) },
+  { category: "Rice & Noodles", veg: true, name: "Padd Thai Noodles", desc: "Savory, wok-tossed noodles.", price: "₹299", image: img("1573080496219-bb080dd4f877", 900) },
+  { category: "Rice & Noodles", veg: false, name: "Schezwan Rice (Chicken)", desc: "Fiery rice with a wok-tossed twist.", price: "₹349", image: img("1557872943-16a5ac26437e", 900) },
+  { category: "Rice & Noodles", veg: false, name: "Chilli Garlic Fried Rice (Chicken / Fish / Prawn)", desc: "Spicy garlicky fried rice with a bold kick.", price: "₹399 / 449 / 499", image: img("1603133872878-684f208fb84b", 900) },
+  { category: "Rice & Noodles", veg: false, name: "Hakka Noodles (Chicken)", desc: "Street-style stir-fried perfection.", price: "₹349", image: img("1569718212165-3a8278d5f624", 900) },
+  { category: "Rice & Noodles", veg: false, name: "Schezwan Noodles (Chicken)", desc: "Spicy, smoky, full of punch.", price: "₹349", image: img("1626509653291-18d9a934b9db", 900) },
+  { category: "Rice & Noodles", veg: false, name: "Pad Thai Noodles (Chicken / Prawns)", desc: "Savory, wok-tossed noodles with choice of protein.", price: "₹399 / 499", image: img("1573080496219-bb080dd4f877", 900) },
+
+  // ---- Combos ----
+  { category: "Combos", veg: true, name: "Paneer Chilly with Garlic Fried Rice", desc: "Spicy paneer paired with garlicky comfort.", price: "₹349", image: img("1596560548464-f010549b84d7", 900) },
+  { category: "Combos", veg: true, name: "Veg Khow Suey with Noodles", desc: "Aromatic curry with noodle harmony.", price: "₹349", image: img("1614777986387-015c2a89b696", 900) },
+  { category: "Combos", veg: true, name: "Choice of Red / Green Curry with Rice", desc: "Thai curry bliss, tailored to your taste.", price: "₹349", image: img("1614777986387-015c2a89b696", 900) },
+  { category: "Combos", veg: false, name: "Chilli with Garlic Fried Rice (Chicken / Fish / Prawn)", desc: "Spicy, garlicky fried rice with a bold twist.", price: "₹399 / 449 / 499", image: img("1603133872878-684f208fb84b", 900) },
+  { category: "Combos", veg: false, name: "Choice of Red / Green Curry Rice (Chicken / Fish / Prawn)", desc: "Aromatic Thai curry with steamed rice.", price: "₹399 / 449 / 499", image: img("1614777986387-015c2a89b696", 900) },
+
+  // ---- Quick Bites ----
+  { category: "Quick Bites", veg: true, name: "Fries", desc: "Golden crisp, perfectly seasoned.", price: "₹149", image: img("1518013431117-eb1465fa5752", 900) },
+  { category: "Quick Bites", veg: true, name: "Spring Roll", desc: "Delicate wrap with savory filling.", price: "₹149", image: img("1461023058943-07fcbe16d735", 900) },
+  { category: "Quick Bites", veg: true, name: "Maggi", desc: "Comfort noodles, homely and nostalgic.", price: "₹99", image: img("1612929633738-8fe44f7ec841", 900) },
+  { category: "Quick Bites", veg: true, name: "Momos", desc: "Steamed pockets of flavor.", price: "₹149", image: img("1496116218417-1a781b1c416c", 900) },
+  { category: "Quick Bites", veg: true, name: "Grilled Cheese Sandwich", desc: "Warm layers, smoky and satisfying.", price: "₹199", image: img("1528735602780-2552fd46c7af", 900) },
+  { category: "Quick Bites", veg: false, name: "Chicken Momos", desc: "Steamed pockets of flavor.", price: "₹199", image: img("1534422298391-e4f8c172dddb", 900) },
+  { category: "Quick Bites", veg: false, name: "Chicken Nuggets", desc: "Tender bites, crisp and golden.", price: "₹199", image: img("1606491956689-2ea866880c84", 900) },
+  { category: "Quick Bites", veg: false, name: "Grilled Sandwich (Chicken)", desc: "Warm layers, smoky and satisfying.", price: "₹249", image: img("1528735602780-2552fd46c7af", 900) },
+
+  // ---- Beverages ----
+  { category: "Beverages", veg: true, name: "Tea", desc: "Classic comfort in a cup.", price: "₹30", image: img("1544787219-7f47ccb76574", 900) },
+  { category: "Beverages", veg: true, name: "Coffee (Espresso / Cappuccino / Latte)", desc: "Bold brew, pure energy.", price: "₹99 / 149 / 199", image: img("1509042239860-f550ce710b93", 900) },
+  { category: "Beverages", veg: true, name: "Cold Coffee", desc: "Refreshing and chilled.", price: "₹149", image: img("1517701550927-30cf4ba1dba5", 900) },
+  { category: "Beverages", veg: true, name: "Milk Shake", desc: "Creamy chill, sweet indulgence.", price: "₹149", image: img("1541658016709-82535e94bc69", 900) },
+  { category: "Beverages", veg: true, name: "Fresh Lime Soda with a Twist", desc: "Pure hydration, anytime.", price: "₹99", image: img("1621263764928-df1444c5e859", 900) },
+  { category: "Beverages", veg: true, name: "Fruit Juice", desc: "Refreshing fruit, ready to sip.", price: "₹99", image: img("1600271886742-f049cd451bba", 900) },
+  { category: "Beverages", veg: true, name: "Packaged Water", desc: "Pure hydration, anytime.", price: "₹20", image: img("1548839140-29a749e1cf4d", 900) },
+
+  // ---- Desserts ----
+  { category: "Desserts", veg: true, name: "Walnut Brownie with Vanilla Ice Cream", desc: "Warm brownie meets cool vanilla indulgence.", price: "₹199", image: img("1606313564200-e75d5e30476c", 900) },
+  { category: "Desserts", veg: true, name: "Hot Gulab Jamun with Ice Cream", desc: "Warm classic meets creamy chill.", price: "₹149", image: img("1563805042-7684c019e1cb", 900) },
+  { category: "Desserts", veg: true, name: "Pancake with Chocolate Syrup & Vanilla Ice Cream", desc: "Sweet stacks with a chocolate drizzle.", price: "₹149", image: img("1567620905732-2d1ec7ab7445", 900) },
 ];
 
 export const experienceStats = [
   { value: 100, suffix: "%", label: "Fresh Ingredients", sub: "Sourced daily at dawn" },
   { value: 48, suffix: "+", label: "Authentic Recipes", sub: "Passed through generations" },
-  { value: 15, suffix: "yrs", label: "Master Chefs", sub: "Tandoor & wok mastery" },
+  { value: 15, suffix: "yrs", label: "Master Chefs", sub: "Wok & flame mastery" },
   { value: 250, suffix: "k+", label: "Guests Served", sub: "And returning for more" },
 ];
 
@@ -169,14 +229,14 @@ export const testimonials: Testimonial[] = [
     name: "Aarav Mehta",
     role: "Food Critic, The Plate",
     quote:
-      "The biryani arrived under a wax seal of smoke. One spoon and the room went quiet. This is fine dining that still tastes like home.",
+      "The Schezwan noodles arrived wreathed in wok smoke. One bite and the room went quiet. This is fine dining with real fire.",
     avatar: img("1633332755192-727a05c4013d", 200),
   },
   {
     name: "Sofia Ricci",
     role: "Travel Journalist",
     quote:
-      "I have eaten across three continents this year. The butter chicken here is the single dish I keep dreaming about.",
+      "I have eaten across three continents this year. The Kung Pao chicken here is the single dish I keep dreaming about.",
     avatar: img("1494790108377-be9c29b29330", 200),
   },
   {
@@ -196,13 +256,13 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const gallery = [
-  { src: img("1585937421612-70a008356fbe", 1000), span: "row-span-2", alt: "Butter chicken in copper" },
-  { src: img("1633945274405-b6c8069047b0", 800), span: "", alt: "Saffron biryani" },
+  { src: img("1585937421612-70a008356fbe", 1000), span: "row-span-2", alt: "Chilly chicken in a wok" },
+  { src: img("1633945274405-b6c8069047b0", 800), span: "", alt: "Schezwan fried rice" },
   { src: img("1517248135467-4c7edcad34c4", 800), span: "", alt: "Restaurant interior" },
   { src: img("1599487488170-d11ec9c172f0", 1000), span: "row-span-2", alt: "Chicken tikka on skewers" },
   { src: img("1414235077428-338989a2e8c0", 800), span: "", alt: "Dining ambience" },
   { src: img("1596797038530-2c107229654b", 800), span: "", alt: "Chilli paneer" },
-  { src: img("1509722747041-616f39b57569", 1000), span: "row-span-2", alt: "Seekh kebab" },
+  { src: img("1509722747041-616f39b57569", 1000), span: "row-span-2", alt: "Steamed momos" },
   { src: img("1551024601-bec78aea704b", 800), span: "", alt: "Dessert plating" },
-  { src: img("1544145945-f90425340c7e", 800), span: "", alt: "Signature mocktail" },
+  { src: img("1544145945-f90425340c7e", 800), span: "", alt: "Signature beverage" },
 ];
