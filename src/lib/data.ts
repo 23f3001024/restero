@@ -22,8 +22,7 @@ export const BRAND = {
   upiName: "The House of Chilli N Curry",
   hours: [{ day: "Monday – Sunday", time: "12:00 PM onwards" }],
   socials: {
-    instagram: "https://instagram.com",
-    facebook: "https://facebook.com",
+    instagram: "https://www.instagram.com/thehouseofchilincurry",
     whatsapp: "https://wa.me/919987930956",
   },
 };

@@ -6,6 +6,7 @@ import ScrollStory from "@/components/ScrollStory";
 import SignatureDishes from "@/components/SignatureDishes";
 import DiscoverPages from "@/components/DiscoverPages";
 import ScanToOrder from "@/components/ScanToOrder";
+import InstagramFollow from "@/components/InstagramFollow";
 import Testimonials from "@/components/Testimonials";
 import ReserveCTA from "@/components/ReserveCTA";
 import Footer from "@/components/Footer";
@@ -55,6 +56,7 @@ export default function Home() {
           <SignatureDishes />
           <DiscoverPages />
           <ScanToOrder />
+          <InstagramFollow />
           <Testimonials />
           <ReserveCTA />
         </main>

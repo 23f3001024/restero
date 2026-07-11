@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
+import { MapPin, Phone, Clock, Instagram } from "lucide-react";
 import SectionLabel from "./ui/SectionLabel";
 import { Reveal } from "./ui/Reveal";
 import { BRAND } from "@/lib/data";
@@ -83,7 +83,6 @@ export default function Contact() {
               <div className="flex items-center gap-3 border-t border-charcoal/10 pt-6">
                 {[
                   { Icon: Instagram, href: BRAND.socials.instagram, label: "Instagram" },
-                  { Icon: Facebook, href: BRAND.socials.facebook, label: "Facebook" },
                 ].map(({ Icon, href, label }) => (
                   <a
                     key={label}

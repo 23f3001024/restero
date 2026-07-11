@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Instagram, Facebook, MessageCircle, ArrowUpRight } from "lucide-react";
+import { Instagram, MessageCircle, ArrowUpRight } from "lucide-react";
 import { BRAND } from "@/lib/data";
 
 const QUICK = [
@@ -106,7 +106,6 @@ export default function Footer() {
             <div className="mt-6 flex gap-3">
               {[
                 { Icon: Instagram, href: BRAND.socials.instagram },
-                { Icon: Facebook, href: BRAND.socials.facebook },
                 { Icon: MessageCircle, href: BRAND.socials.whatsapp },
               ].map(({ Icon, href }, i) => (
                 <a
