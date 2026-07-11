@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Star } from "lucide-react";
-import SmartImage from "./ui/SmartImage";
 import SectionLabel from "./ui/SectionLabel";
 import { Reveal } from "./ui/Reveal";
 import { testimonials } from "@/lib/data";
@@ -59,8 +58,13 @@ export default function Testimonials() {
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="mt-8 flex items-center justify-center gap-4">
-                <div className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-gold/40">
-                  <SmartImage src={t.avatar} alt={t.name} fill className="object-cover" />
+                <div className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-gold via-gold-light to-gold-deep font-display text-lg font-bold text-charcoal ring-2 ring-gold/40">
+                  {t.name
+                    .split(" ")
+                    .map((w) => w[0])
+                    .join("")
+                    .slice(0, 2)
+                    .toUpperCase()}
                 </div>
                 <div className="text-left">
                   <p className="font-display text-lg text-charcoal">{t.name}</p>
