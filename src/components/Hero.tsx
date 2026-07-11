@@ -50,7 +50,7 @@ export default function Hero() {
 
       {/* floating gold dust */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {[...Array(14)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <motion.span
             key={i}
             className="absolute h-1 w-1 rounded-full bg-gold/70"

@@ -62,7 +62,7 @@ export default function Experience() {
         </Reveal>
 
         {/* counters */}
-        <div className="mt-16 grid grid-cols-2 gap-8 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-3">
           {experienceStats.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.1} className="text-center">
               <p className="font-display text-5xl font-bold text-gold-gradient sm:text-6xl">

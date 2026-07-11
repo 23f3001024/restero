@@ -20,6 +20,7 @@ export default function ReservePage() {
         subtitle="Tell us when you're coming — we'll have the coals lit and the table dressed."
         image={img("1585937421612-70a008356fbe", 2000)}
         crumb="Reserve"
+        bottomFade="none"
       />
       <Booking />
     </SiteFrame>

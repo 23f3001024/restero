@@ -19,6 +19,7 @@ export default function Cursor() {
     const pos = { x: -100, y: -100 };
     const ringPos = { x: -100, y: -100 };
     let raf = 0;
+    let isHover = false;
 
     const onMove = (e: MouseEvent) => {
       pos.x = e.clientX;
@@ -27,7 +28,12 @@ export default function Cursor() {
         dot.current.style.transform = `translate3d(${pos.x - 3}px, ${pos.y - 3}px, 0)`;
       }
       const t = e.target as HTMLElement;
-      setHovering(!!t.closest("a, button, [data-cursor='hover'], input, textarea, select"));
+      const next = !!t.closest("a, button, [data-cursor='hover'], input, textarea, select");
+      // Only touch React state when the hover status actually flips.
+      if (next !== isHover) {
+        isHover = next;
+        setHovering(next);
+      }
     };
 
     const loop = () => {

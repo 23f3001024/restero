@@ -64,9 +64,11 @@ const config: Config = {
           "20%": { opacity: "0.5" },
           "100%": { transform: "translateY(-140px) scale(1.8)", opacity: "0" },
         },
+        // Animates transform only (GPU-composited) instead of border-radius, so
+        // the expensive blur layer is never re-rasterized while it drifts.
         "blob-morph": {
-          "0%, 100%": { borderRadius: "42% 58% 63% 37% / 41% 44% 56% 59%" },
-          "50%": { borderRadius: "58% 42% 33% 67% / 63% 51% 49% 37%" },
+          "0%, 100%": { transform: "translate3d(0,0,0) scale(1)" },
+          "50%": { transform: "translate3d(0,-16px,0) scale(1.12)" },
         },
       },
       animation: {

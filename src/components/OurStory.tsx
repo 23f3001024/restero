@@ -37,19 +37,6 @@ export default function OurStory() {
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent" />
           </div>
-          {/* floating glass badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="glass absolute -bottom-6 -left-6 rounded-3xl px-7 py-5 shadow-glass"
-          >
-            <p className="font-display text-4xl font-bold text-crimson">1998</p>
-            <p className="font-button text-[0.6rem] uppercase tracking-luxe text-muted">
-              Serving Since
-            </p>
-          </motion.div>
         </Reveal>
 
         {/* text */}
@@ -67,9 +54,9 @@ export default function OurStory() {
           <Reveal delay={0.1}>
             <p className="mt-7 font-body leading-relaxed text-muted">
               It began with a single wok and a grandmother&apos;s recipe book.
-              Three decades on, The House of Chilli N Curry has grown into a
-              destination — yet every plate still carries the same devotion to
-              spice, smoke and warmth that started it all.
+              Today, The House of Chilli N Curry has grown into a destination —
+              yet every plate still carries the same devotion to spice, smoke
+              and warmth that started it all.
             </p>
           </Reveal>
 
@@ -95,25 +82,6 @@ export default function OurStory() {
               </div>
             </Reveal>
           </div>
-
-          <Reveal delay={0.3}>
-            <div className="mt-10 flex items-center justify-center gap-4 sm:justify-start">
-              <div className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-gold/40">
-                <SmartImage
-                  src={img("1583394293214-28ded15ee548", 160)}
-                  alt="Executive Chef"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div>
-                <p className="font-display text-lg text-charcoal">Chef Imran Qureshi</p>
-                <p className="font-button text-[0.65rem] uppercase tracking-wider2 text-muted">
-                  Executive Chef & Custodian of Flavour
-                </p>
-              </div>
-            </div>
-          </Reveal>
         </div>
       </div>
     </section>

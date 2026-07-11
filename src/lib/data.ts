@@ -204,7 +204,6 @@ export const experienceStats = [
   { value: 100, suffix: "%", label: "Fresh Ingredients", sub: "Sourced daily at dawn" },
   { value: 48, suffix: "+", label: "Authentic Recipes", sub: "Passed through generations" },
   { value: 15, suffix: "yrs", label: "Master Chefs", sub: "Wok & flame mastery" },
-  { value: 250, suffix: "k+", label: "Guests Served", sub: "And returning for more" },
 ];
 
 export const experiencePillars = [

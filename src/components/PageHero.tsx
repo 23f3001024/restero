@@ -14,13 +14,16 @@ export default function PageHero({
   subtitle,
   image,
   crumb,
+  bottomFade = "white",
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   accent?: string;
   subtitle: string;
   image: string;
   crumb: string;
+  /** Bottom blend into the next section. Use "none" when it's dark. */
+  bottomFade?: "white" | "none";
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -44,7 +47,7 @@ export default function PageHero({
 
       {/* floating gold dust */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {[...Array(10)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <motion.span
             key={i}
             className="absolute h-1 w-1 rounded-full bg-gold/70"
@@ -59,11 +62,13 @@ export default function PageHero({
         style={{ opacity: fade }}
         className="relative z-10 mx-auto max-w-3xl px-6 text-center"
       >
-        <div className="mb-6 flex items-center justify-center gap-3">
-          <span className="h-px w-10 bg-gold/70" />
-          <span className="eyebrow text-gold">{eyebrow}</span>
-          <span className="h-px w-10 bg-gold/70" />
-        </div>
+        {eyebrow && (
+          <div className="mb-6 flex items-center justify-center gap-3">
+            <span className="h-px w-10 bg-gold/70" />
+            <span className="eyebrow text-gold">{eyebrow}</span>
+            <span className="h-px w-10 bg-gold/70" />
+          </div>
+        )}
 
         <h1 className="font-display text-4xl font-semibold leading-[1.05] text-cream sm:text-6xl lg:text-7xl">
           <SplitReveal text={title} />
@@ -101,7 +106,9 @@ export default function PageHero({
         </motion.nav>
       </motion.div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white" />
+      {bottomFade === "white" && (
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white" />
+      )}
     </section>
   );
 }
