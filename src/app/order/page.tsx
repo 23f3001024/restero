@@ -39,6 +39,7 @@ type Confirmation = {
   paymentStatus: "paid" | "pending";
   paymentMethod: PayMethod | null;
   paymentReference: string | null;
+  name: string;
 };
 
 const PAY_OPTIONS: { key: PayMethod; label: string; Icon: typeof Wallet; note: string }[] = [
@@ -288,13 +289,26 @@ export default function OrderPage() {
 
   const whatsappLink = () => {
     const snap = ordered ?? { lines, total };
-    const ref = confirmation?.paymentReference
-      ? `%0AUPI Ref: ${confirmation.paymentReference}`
-      : "";
-    const text = `Order ${confirmation?.id}%0A${snap.lines
-      .map((l) => `${l.qty}× ${l.name}`)
-      .join("%0A")}%0ATotal: ₹${snap.total}${ref}`;
-    return `${BRAND.socials.whatsapp}?text=${text}`;
+    // Build a plain message, then URL-encode the whole thing so special
+    // characters (&, ₹, newlines) survive — e.g. "Hot & Sour Soup".
+    const lineText = snap.lines.map((l) => `${l.qty}× ${l.name}`).join("\n");
+    const message = [
+      "*The House of Chilli N Curry*",
+      `Order: ${confirmation?.id ?? ""}`,
+      confirmation?.name ? `Name: ${confirmation.name}` : "",
+      confirmation?.mode === "dine-in" && confirmation.table
+        ? `Table: ${confirmation.table}`
+        : "Takeaway",
+      "",
+      lineText,
+      "",
+      `Total: ₹${snap.total}`,
+      confirmation?.paymentStatus === "paid" ? "Payment: Paid" : "Payment: At counter",
+      confirmation?.paymentReference ? `UPI Ref: ${confirmation.paymentReference}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+    return `${BRAND.socials.whatsapp}?text=${encodeURIComponent(message)}`;
   };
 
   return (
