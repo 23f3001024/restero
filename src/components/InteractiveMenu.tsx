@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, Search, X } from "lucide-react";
 import SmartImage from "./ui/SmartImage";
 import SectionLabel from "./ui/SectionLabel";
 import { Reveal } from "./ui/Reveal";
@@ -11,7 +11,20 @@ import { menu, menuCategories, type MenuCategory } from "@/lib/data";
 
 export default function InteractiveMenu() {
   const [active, setActive] = useState<MenuCategory>("Starters");
-  const items = menu.filter((m) => m.category === active);
+  const [query, setQuery] = useState("");
+
+  const q = query.trim().toLowerCase();
+  const searching = q.length > 0;
+  // While searching, match across the whole menu (name, description, category);
+  // otherwise show the selected category.
+  const items = searching
+    ? menu.filter(
+        (m) =>
+          m.name.toLowerCase().includes(q) ||
+          m.desc.toLowerCase().includes(q) ||
+          m.category.toLowerCase().includes(q),
+      )
+    : menu.filter((m) => m.category === active);
 
   return (
     <section id="menu" className="relative overflow-hidden bg-cream-light py-28 sm:py-36">
@@ -24,12 +37,46 @@ export default function InteractiveMenu() {
           </h2>
         </Reveal>
 
+        {/* search */}
+        <Reveal className="mx-auto mt-10 max-w-md">
+          <div className="relative">
+            <Search
+              size={18}
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted"
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search dishes — paneer, noodles, momos…"
+              aria-label="Search the menu"
+              className="w-full rounded-full border border-charcoal/15 bg-white py-3 pl-11 pr-10 font-body text-sm text-charcoal shadow-glass outline-none transition-colors focus:border-crimson focus:ring-2 focus:ring-crimson/15"
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 grid h-6 w-6 place-items-center rounded-full text-muted transition-colors hover:bg-charcoal/5 hover:text-crimson"
+              >
+                <X size={15} />
+              </button>
+            )}
+          </div>
+        </Reveal>
+
         {/* filters */}
-        <div className="mt-12 flex flex-wrap justify-center gap-2 sm:gap-3">
+        <div
+          className={`mt-8 flex flex-wrap justify-center gap-2 sm:gap-3 transition-opacity ${
+            searching ? "pointer-events-none opacity-40" : "opacity-100"
+          }`}
+        >
           {menuCategories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActive(cat)}
+              onClick={() => {
+                setQuery("");
+                setActive(cat);
+              }}
               className={`relative rounded-full px-5 py-2.5 font-button text-[0.72rem] font-semibold uppercase tracking-wider2 transition-colors duration-300 ${
                 active === cat ? "text-cream" : "text-charcoal/70 hover:text-crimson"
               }`}
@@ -47,11 +94,35 @@ export default function InteractiveMenu() {
         </div>
       </div>
 
+      {/* results count while searching */}
+      {searching && (
+        <p className="mt-8 text-center font-button text-[0.62rem] uppercase tracking-wider2 text-muted">
+          {items.length} {items.length === 1 ? "dish" : "dishes"} found
+          {items.length ? ` for “${query.trim()}”` : ""}
+        </p>
+      )}
+
       {/* horizontal scroller */}
-      <div className="mt-14">
+      <div className={searching ? "mt-6" : "mt-14"}>
         <AnimatePresence mode="wait">
+          {items.length === 0 ? (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="px-6 py-14 text-center"
+            >
+              <p className="font-display text-2xl text-charcoal/70">
+                No dishes match “{query.trim()}”.
+              </p>
+              <p className="mt-2 font-body text-sm text-muted">
+                Try “paneer”, “noodles”, “momos”, or “chicken”.
+              </p>
+            </motion.div>
+          ) : (
           <motion.div
-            key={active}
+            key={searching ? `q-${q}` : active}
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -30 }}
@@ -116,10 +187,13 @@ export default function InteractiveMenu() {
               </motion.article>
             ))}
           </motion.div>
+          )}
         </AnimatePresence>
-        <p className="mt-2 text-center font-button text-[0.6rem] uppercase tracking-luxe text-muted">
-          ← Drag to explore · tap a dish to order →
-        </p>
+        {items.length > 0 && (
+          <p className="mt-2 text-center font-button text-[0.6rem] uppercase tracking-luxe text-muted">
+            ← Drag to explore · tap a dish to order →
+          </p>
+        )}
       </div>
     </section>
   );

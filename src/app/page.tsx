@@ -2,6 +2,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import SignatureDishes from "@/components/SignatureDishes";
+import InteractiveMenu from "@/components/InteractiveMenu";
 import DiscoverPages from "@/components/DiscoverPages";
 import ScanToOrder from "@/components/ScanToOrder";
 import InstagramFollow from "@/components/InstagramFollow";
@@ -50,6 +51,7 @@ export default function Home() {
         <main>
           <Hero />
           <SignatureDishes />
+          <InteractiveMenu />
           <DiscoverPages />
           <ScanToOrder />
           <InstagramFollow />
