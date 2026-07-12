@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   const input = body as BookingInput;
   input.guests = Number(input.guests);
 
-  if (!isSlotAvailable(input.date, input.time)) {
+  if (!(await isSlotAvailable(input.date, input.time))) {
     return NextResponse.json(
       { error: "That slot is fully reserved. Please choose another time." },
       { status: 409 },

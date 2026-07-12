@@ -1,11 +1,11 @@
 /**
  * Booking store + notification hooks.
  *
- * Default: in-memory store (resets on server restart) so the reservation flow
- * works out of the box. To go to production, replace `saveBooking` with a
- * Firestore/Supabase write and fill in `sendEmail` / `sendSms` using the keys
- * documented in .env.local.example — the rest of the app needs no changes.
+ * Persists to Supabase when configured (see src/lib/supabase.ts), otherwise
+ * falls back to an in-memory store so the reservation flow works with zero
+ * setup. Fill in `sendEmail` / `sendSms` using the keys in .env.local.example.
  */
+import { supabase } from "./supabase";
 
 export type BookingInput = {
   name: string;
@@ -49,9 +49,45 @@ export function validateBooking(input: Partial<BookingInput>): string | null {
   return null;
 }
 
+const MAX_PARTIES_PER_SLOT = 8;
+
+type BookingRow = {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  guests: number;
+  date: string;
+  time: string;
+  requests: string | null;
+  status: "confirmed" | "cancelled";
+  created_at: string;
+};
+
+const rowToBooking = (r: BookingRow): Booking => ({
+  id: r.id,
+  name: r.name,
+  phone: r.phone,
+  email: r.email,
+  guests: r.guests,
+  date: r.date,
+  time: r.time,
+  requests: r.requests ?? undefined,
+  createdAt: r.created_at,
+  status: r.status,
+});
+
 /** Naive availability: cap concurrent covers per 30-min slot. */
-export function isSlotAvailable(date: string, time: string): boolean {
-  const MAX_PARTIES_PER_SLOT = 8;
+export async function isSlotAvailable(date: string, time: string): Promise<boolean> {
+  if (supabase) {
+    const { count } = await supabase
+      .from("bookings")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "confirmed")
+      .eq("date", date)
+      .eq("time", time);
+    return (count ?? 0) < MAX_PARTIES_PER_SLOT;
+  }
   const count = Array.from(store.values()).filter(
     (b) => b.status === "confirmed" && b.date === date && b.time === time,
   ).length;
@@ -65,16 +101,48 @@ export async function saveBooking(input: BookingInput): Promise<Booking> {
     createdAt: new Date().toISOString(),
     status: "confirmed",
   };
-  store.set(booking.id, booking);
+
+  if (supabase) {
+    const { error } = await supabase.from("bookings").insert({
+      id: booking.id,
+      name: booking.name,
+      phone: booking.phone,
+      email: booking.email,
+      guests: booking.guests,
+      date: booking.date,
+      time: booking.time,
+      requests: booking.requests ?? null,
+      status: booking.status,
+      created_at: booking.createdAt,
+    });
+    if (error) throw new Error(error.message);
+  } else {
+    store.set(booking.id, booking);
+  }
+
   await Promise.all([sendEmail(booking), sendSms(booking)]);
   return booking;
 }
 
-export function getBooking(id: string) {
+export async function getBooking(id: string): Promise<Booking | null> {
+  if (supabase) {
+    const { data } = await supabase.from("bookings").select("*").eq("id", id).maybeSingle();
+    return data ? rowToBooking(data as BookingRow) : null;
+  }
   return store.get(id) ?? null;
 }
 
-export function cancelBooking(id: string) {
+export async function cancelBooking(id: string): Promise<Booking | null> {
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("bookings")
+      .update({ status: "cancelled" })
+      .eq("id", id)
+      .select("*")
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    return data ? rowToBooking(data as BookingRow) : null;
+  }
   const b = store.get(id);
   if (!b) return null;
   b.status = "cancelled";

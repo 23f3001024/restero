@@ -17,7 +17,7 @@ const unauthorized = () =>
 export async function GET() {
   if (!isStaffAuthed()) return unauthorized();
   return NextResponse.json(
-    { orders: listOrders() },
+    { orders: await listOrders() },
     { headers: { "Cache-Control": "no-store" } },
   );
 }
@@ -34,7 +34,7 @@ export async function PATCH(req: Request) {
   if (!body.id || !body.status || !ORDER_STATUSES.includes(body.status)) {
     return NextResponse.json({ error: "id and a valid status are required." }, { status: 422 });
   }
-  const order = updateOrderStatus(body.id, body.status);
+  const order = await updateOrderStatus(body.id, body.status);
   if (!order) return NextResponse.json({ error: "Order not found." }, { status: 404 });
   return NextResponse.json({ order });
 }

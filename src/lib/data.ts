@@ -98,6 +98,8 @@ export const signatureDishes: Dish[] = [
   },
 ];
 
+export type MenuVariant = { label: string; price: number };
+
 export type MenuItem = {
   name: string;
   desc: string;
@@ -105,6 +107,8 @@ export type MenuItem = {
   image: string;
   category: MenuCategory;
   veg: boolean;
+  /** Priced options (e.g. Chicken / Fish / Prawn) shown as a dropdown. */
+  variants?: MenuVariant[];
 };
 
 export type MenuCategory =
@@ -147,11 +151,11 @@ export const menu: MenuItem[] = [
   { category: "Mains", veg: true, name: "Chilly Paneer", desc: "Fiery wok magic, vibrant and delicious.", price: "₹249", image: img("1631452180519-c014fe946bc7", 900) },
   { category: "Mains", veg: true, name: "Garlic Basil Special", desc: "Fragrant herbs with a garlicky punch!", price: "₹249", image: img("1625944230945-1b7dd3b949ab", 900) },
   { category: "Mains", veg: false, name: "Black Pepper Chicken", desc: "Juicy bites with a peppery punch.", price: "₹249", image: img("1544025162-d76694265947", 900) },
-  { category: "Mains", veg: false, name: "Chilly Chicken / Fish / Prawn", desc: "Fiery wok magic, bursting with flavor.", price: "₹299 / 349 / 399", image: img("1603894584373-5ac82b2ae398", 900) },
+  { category: "Mains", veg: false, name: "Chilly Chicken / Fish / Prawn", desc: "Fiery wok magic, bursting with flavor.", price: "₹299 / 349 / 399", image: img("1603894584373-5ac82b2ae398", 900), variants: [{ label: "Chicken", price: 299 }, { label: "Fish", price: 349 }, { label: "Prawn", price: 399 }] },
   { category: "Mains", veg: false, name: "Garlic Basil Special (Chicken)", desc: "Fragrant herbs with a garlicky punch.", price: "₹349", image: img("1603894584373-5ac82b2ae398", 900) },
   { category: "Mains", veg: false, name: "Kung Pao (Chicken)", desc: "Nutty, spicy, and irresistible.", price: "₹349", image: img("1603894584373-5ac82b2ae398", 900) },
-  { category: "Mains", veg: false, name: "Lemon Grass Chicken / Prawn", desc: "Zesty lemongrass with smoky paprika.", price: "₹349 / 449", image: img("1559737558-2f5a35f4523b", 900) },
-  { category: "Mains", veg: false, name: "Thai Basil Chicken / Fish / Prawn", desc: "Aromatic Thai flavors, rich and balanced.", price: "₹349 / 399 / 449", image: img("1614777986387-015c2a89b696", 900) },
+  { category: "Mains", veg: false, name: "Lemon Grass Chicken / Prawn", desc: "Zesty lemongrass with smoky paprika.", price: "₹349 / 449", image: img("1559737558-2f5a35f4523b", 900), variants: [{ label: "Chicken", price: 349 }, { label: "Prawn", price: 449 }] },
+  { category: "Mains", veg: false, name: "Thai Basil Chicken / Fish / Prawn", desc: "Aromatic Thai flavors, rich and balanced.", price: "₹349 / 399 / 449", image: img("1614777986387-015c2a89b696", 900), variants: [{ label: "Chicken", price: 349 }, { label: "Fish", price: 399 }, { label: "Prawn", price: 449 }] },
   { category: "Mains", veg: false, name: "Ginger Soya Chicken", desc: "Earthy soy with a ginger zing.", price: "₹299", image: img("1544025162-d76694265947", 900) },
   { category: "Mains", veg: false, name: "Chicken in Teriyaki Sauce", desc: "Sweet-savory Japanese glaze.", price: "₹349", image: img("1544025162-d76694265947", 900) },
 
@@ -163,17 +167,17 @@ export const menu: MenuItem[] = [
   { category: "Rice & Noodles", veg: true, name: "Schezwan Noodles", desc: "Spicy, smoky, full of punch.", price: "₹249", image: img("1573080496219-bb080dd4f877", 900) },
   { category: "Rice & Noodles", veg: true, name: "Padd Thai Noodles", desc: "Savory, wok-tossed noodles.", price: "₹299", image: img("1573080496219-bb080dd4f877", 900) },
   { category: "Rice & Noodles", veg: false, name: "Schezwan Rice (Chicken)", desc: "Fiery rice with a wok-tossed twist.", price: "₹349", image: img("1557872943-16a5ac26437e", 900) },
-  { category: "Rice & Noodles", veg: false, name: "Chilli Garlic Fried Rice (Chicken / Fish / Prawn)", desc: "Spicy garlicky fried rice with a bold kick.", price: "₹399 / 449 / 499", image: img("1603133872878-684f208fb84b", 900) },
+  { category: "Rice & Noodles", veg: false, name: "Chilli Garlic Fried Rice (Chicken / Fish / Prawn)", desc: "Spicy garlicky fried rice with a bold kick.", price: "₹399 / 449 / 499", image: img("1603133872878-684f208fb84b", 900), variants: [{ label: "Chicken", price: 399 }, { label: "Fish", price: 449 }, { label: "Prawn", price: 499 }] },
   { category: "Rice & Noodles", veg: false, name: "Hakka Noodles (Chicken)", desc: "Street-style stir-fried perfection.", price: "₹349", image: img("1569718212165-3a8278d5f624", 900) },
   { category: "Rice & Noodles", veg: false, name: "Schezwan Noodles (Chicken)", desc: "Spicy, smoky, full of punch.", price: "₹349", image: img("1626509653291-18d9a934b9db", 900) },
-  { category: "Rice & Noodles", veg: false, name: "Pad Thai Noodles (Chicken / Prawns)", desc: "Savory, wok-tossed noodles with choice of protein.", price: "₹399 / 499", image: img("1573080496219-bb080dd4f877", 900) },
+  { category: "Rice & Noodles", veg: false, name: "Pad Thai Noodles (Chicken / Prawns)", desc: "Savory, wok-tossed noodles with choice of protein.", price: "₹399 / 499", image: img("1573080496219-bb080dd4f877", 900), variants: [{ label: "Chicken", price: 399 }, { label: "Prawns", price: 499 }] },
 
   // ---- Combos ----
   { category: "Combos", veg: true, name: "Paneer Chilly with Garlic Fried Rice", desc: "Spicy paneer paired with garlicky comfort.", price: "₹349", image: img("1596560548464-f010549b84d7", 900) },
   { category: "Combos", veg: true, name: "Veg Khow Suey with Noodles", desc: "Aromatic curry with noodle harmony.", price: "₹349", image: img("1614777986387-015c2a89b696", 900) },
   { category: "Combos", veg: true, name: "Choice of Red / Green Curry with Rice", desc: "Thai curry bliss, tailored to your taste.", price: "₹349", image: img("1614777986387-015c2a89b696", 900) },
-  { category: "Combos", veg: false, name: "Chilli with Garlic Fried Rice (Chicken / Fish / Prawn)", desc: "Spicy, garlicky fried rice with a bold twist.", price: "₹399 / 449 / 499", image: img("1603133872878-684f208fb84b", 900) },
-  { category: "Combos", veg: false, name: "Choice of Red / Green Curry Rice (Chicken / Fish / Prawn)", desc: "Aromatic Thai curry with steamed rice.", price: "₹399 / 449 / 499", image: img("1614777986387-015c2a89b696", 900) },
+  { category: "Combos", veg: false, name: "Chilli with Garlic Fried Rice (Chicken / Fish / Prawn)", desc: "Spicy, garlicky fried rice with a bold twist.", price: "₹399 / 449 / 499", image: img("1603133872878-684f208fb84b", 900), variants: [{ label: "Chicken", price: 399 }, { label: "Fish", price: 449 }, { label: "Prawn", price: 499 }] },
+  { category: "Combos", veg: false, name: "Choice of Red / Green Curry Rice (Chicken / Fish / Prawn)", desc: "Aromatic Thai curry with steamed rice.", price: "₹399 / 449 / 499", image: img("1614777986387-015c2a89b696", 900), variants: [{ label: "Chicken", price: 399 }, { label: "Fish", price: 449 }, { label: "Prawn", price: 499 }] },
 
   // ---- Quick Bites ----
   { category: "Quick Bites", veg: true, name: "Fries", desc: "Golden crisp, perfectly seasoned.", price: "₹149", image: img("1518013431117-eb1465fa5752", 900) },
@@ -187,7 +191,7 @@ export const menu: MenuItem[] = [
 
   // ---- Beverages ----
   { category: "Beverages", veg: true, name: "Tea", desc: "Classic comfort in a cup.", price: "₹30", image: img("1544787219-7f47ccb76574", 900) },
-  { category: "Beverages", veg: true, name: "Coffee (Espresso / Cappuccino / Latte)", desc: "Bold brew, pure energy.", price: "₹99 / 149 / 199", image: img("1509042239860-f550ce710b93", 900) },
+  { category: "Beverages", veg: true, name: "Coffee (Espresso / Cappuccino / Latte)", desc: "Bold brew, pure energy.", price: "₹99 / 149 / 199", image: img("1509042239860-f550ce710b93", 900), variants: [{ label: "Espresso", price: 99 }, { label: "Cappuccino", price: 149 }, { label: "Latte", price: 199 }] },
   { category: "Beverages", veg: true, name: "Cold Coffee", desc: "Refreshing and chilled.", price: "₹149", image: img("1517701550927-30cf4ba1dba5", 900) },
   { category: "Beverages", veg: true, name: "Milk Shake", desc: "Creamy chill, sweet indulgence.", price: "₹149", image: img("1541658016709-82535e94bc69", 900) },
   { category: "Beverages", veg: true, name: "Fresh Lime Soda with a Twist", desc: "Pure hydration, anytime.", price: "₹99", image: img("1621263764928-df1444c5e859", 900) },

@@ -23,8 +23,22 @@ import {
 } from "lucide-react";
 import QRCode from "qrcode";
 import SmartImage from "@/components/ui/SmartImage";
-import { menu, menuCategories, BRAND, type MenuCategory } from "@/lib/data";
+import { menu, menuCategories, BRAND, type MenuCategory, type MenuItem } from "@/lib/data";
 import { priceToNumber, type OrderLine } from "@/lib/orders";
+
+// Cart-line label for a chosen variant, e.g. "Chilly Prawn" or "Coffee (Latte)".
+function variantName(item: MenuItem, label: string) {
+  const name = item.name;
+  if (name.includes("(")) return `${name.slice(0, name.indexOf("(")).trim()} (${label})`;
+  const first = name.split(" / ")[0].trim(); // "Chilly Chicken"
+  const base = first.split(" ").slice(0, -1).join(" ") || first; // "Chilly"
+  return `${base} ${label}`;
+}
+
+// key used in the cart for an item (+ chosen variant, when it has one).
+function cartKey(item: MenuItem, label?: string) {
+  return item.variants?.length && label ? variantName(item, label) : item.name;
+}
 
 type Cart = Record<string, number>;
 type Mode = "dine-in" | "takeaway";
@@ -64,6 +78,21 @@ export default function OrderPage() {
   const [ordered, setOrdered] = useState<{ lines: OrderLine[]; total: number } | null>(null);
   const [txnId, setTxnId] = useState("");
   const [upiQr, setUpiQr] = useState("");
+  // Selected variant label per item (e.g. { "Chilly Chicken / Fish / Prawn": "Prawn" }).
+  const [variantSel, setVariantSel] = useState<Record<string, string>>({});
+
+  // Map every possible cart line (incl. each variant) to its price.
+  const catalog = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const item of menu) {
+      if (item.variants?.length) {
+        for (const v of item.variants) m.set(variantName(item, v.label), v.price);
+      } else {
+        m.set(item.name, priceToNumber(item.price));
+      }
+    }
+    return m;
+  }, []);
 
   // Read the table number encoded in the QR the guest scanned (/order?table=7),
   // and any dish passed from the homepage menu (/order?add=Chilly%20Paneer).
@@ -79,7 +108,8 @@ export default function OrderPage() {
       const dish = menu.find((m) => m.name === add);
       if (dish) {
         setActive(dish.category);
-        setCart((c) => ({ ...c, [dish.name]: (c[dish.name] ?? 0) + 1 }));
+        const key = cartKey(dish, dish.variants?.[0]?.label);
+        setCart((c) => ({ ...c, [key]: (c[key] ?? 0) + 1 }));
       }
       // Strip ?add= so a Strict-Mode re-run or a page refresh doesn't add it
       // twice (this was the "one tap, quantity 2" bug).
@@ -102,10 +132,12 @@ export default function OrderPage() {
 
   const lines = useMemo(
     () =>
-      menu
-        .filter((m) => cart[m.name])
-        .map((m) => ({ name: m.name, price: priceToNumber(m.price), qty: cart[m.name] })),
-    [cart],
+      Object.entries(cart).map(([name, qty]) => ({
+        name,
+        price: catalog.get(name) ?? 0,
+        qty,
+      })),
+    [cart, catalog],
   );
   const count = lines.reduce((s, l) => s + l.qty, 0);
   const total = lines.reduce((s, l) => s + l.price * l.qty, 0);
@@ -353,37 +385,61 @@ export default function OrderPage() {
               animate="center"
               exit="exit"
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-2 space-y-3"
+              className="mt-2 w-full space-y-3"
             >
               {items.map((item) => {
-                const qty = cart[item.name] ?? 0;
+                const selected =
+                  variantSel[item.name] ?? item.variants?.[0]?.label;
+                const key = cartKey(item, selected);
+                const qty = cart[key] ?? 0;
+                const priceStr = item.variants
+                  ? `₹${item.variants.find((v) => v.label === selected)?.price ?? ""}`
+                  : item.price;
                 return (
                   <li
                     key={item.name}
-                    className="flex items-center gap-3 rounded-2xl bg-white p-3 shadow-glass"
+                    className="grid w-full grid-cols-[3.5rem_minmax(0,1fr)_auto] items-center gap-3 rounded-2xl bg-white p-3 shadow-glass sm:grid-cols-[6rem_minmax(0,1fr)_auto]"
                   >
-                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl sm:h-24 sm:w-24">
+                    <div className="relative h-14 w-14 overflow-hidden rounded-xl sm:h-24 sm:w-24">
                       <SmartImage src={item.image} alt={item.name} fill sizes="96px" className="object-cover" />
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-lg text-charcoal">{item.name}</h3>
+                    <div className="min-w-0">
+                      <h3 className="font-display text-base leading-snug text-charcoal sm:text-lg">{item.name}</h3>
                       <p className="truncate font-body text-xs text-muted">{item.desc}</p>
-                      <p className="mt-1 font-display text-base font-semibold text-crimson">{item.price}</p>
+                      <div className="mt-1 flex flex-wrap items-center gap-2">
+                        <p className="font-display text-base font-semibold text-crimson">{priceStr}</p>
+                        {item.variants && (
+                          <select
+                            value={selected}
+                            onChange={(e) =>
+                              setVariantSel((s) => ({ ...s, [item.name]: e.target.value }))
+                            }
+                            aria-label={`Choose option for ${item.name}`}
+                            className="rounded-lg border border-charcoal/15 bg-white px-2 py-1 font-body text-xs text-charcoal outline-none focus:border-crimson"
+                          >
+                            {item.variants.map((v) => (
+                              <option key={v.label} value={v.label}>
+                                {v.label} · ₹{v.price}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </div>
                     </div>
                     {qty === 0 ? (
                       <button
-                        onClick={() => setQty(item.name, 1)}
-                        className="shrink-0 rounded-full bg-crimson px-4 py-2 font-button text-[0.65rem] font-semibold uppercase tracking-wider2 text-cream"
+                        onClick={() => setQty(key, 1)}
+                        className="shrink-0 rounded-full bg-crimson px-3.5 py-2 font-button text-[0.65rem] font-semibold uppercase tracking-wider2 text-cream sm:px-4"
                       >
                         Add
                       </button>
                     ) : (
                       <div className="flex shrink-0 items-center gap-2 rounded-full bg-crimson px-2 py-1.5 text-cream">
-                        <button onClick={() => setQty(item.name, -1)} aria-label="Remove one" className="grid h-6 w-6 place-items-center">
+                        <button onClick={() => setQty(key, -1)} aria-label="Remove one" className="grid h-6 w-6 place-items-center">
                           <Minus size={14} />
                         </button>
                         <span className="w-4 text-center font-button text-sm font-semibold">{qty}</span>
-                        <button onClick={() => setQty(item.name, 1)} aria-label="Add one" className="grid h-6 w-6 place-items-center">
+                        <button onClick={() => setQty(key, 1)} aria-label="Add one" className="grid h-6 w-6 place-items-center">
                           <Plus size={14} />
                         </button>
                       </div>

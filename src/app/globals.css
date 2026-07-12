@@ -39,19 +39,6 @@ body {
   width: 100%;
 }
 
-/* Hide native cursor on desktop where the custom cursor takes over */
-@media (hover: hover) and (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a,
-  button,
-  input,
-  textarea,
-  select {
-    cursor: none;
-  }
-}
 
 /* ---------- Selection ---------- */
 ::selection {

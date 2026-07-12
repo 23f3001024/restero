@@ -1,8 +1,8 @@
 /**
- * Online-order store. In-memory by default (same pattern as bookings.ts) so the
- * "Scan to Order" flow works out of the box. Swap `saveOrder` for a DB write to
- * go to production.
+ * Online-order store. Persists to Supabase when configured (see src/lib/supabase.ts),
+ * otherwise falls back to an in-memory Map so the flow works with zero setup.
  */
+import { supabase } from "./supabase";
 
 export type OrderLine = { name: string; price: number; qty: number };
 
@@ -67,6 +67,35 @@ export function validateOrder(input: Partial<OrderInput>): string | null {
   return null;
 }
 
+// ---- Supabase row <-> Order mapping ----
+type OrderRow = {
+  id: string;
+  name: string;
+  phone: string;
+  mode: "dine-in" | "takeaway";
+  table_no: string | null;
+  items: OrderLine[];
+  notes: string | null;
+  payment: Payment | null;
+  total: number;
+  status: OrderStatus;
+  created_at: string;
+};
+
+const rowToOrder = (r: OrderRow): Order => ({
+  id: r.id,
+  name: r.name,
+  phone: r.phone,
+  mode: r.mode,
+  table: r.table_no ?? undefined,
+  items: r.items,
+  notes: r.notes ?? undefined,
+  payment: r.payment ?? undefined,
+  total: r.total,
+  status: r.status,
+  createdAt: r.created_at,
+});
+
 export async function saveOrder(input: OrderInput): Promise<Order> {
   const total = input.items.reduce((sum, it) => sum + it.price * it.qty, 0);
   const order: Order = {
@@ -76,22 +105,66 @@ export async function saveOrder(input: OrderInput): Promise<Order> {
     createdAt: new Date().toISOString(),
     status: "received",
   };
+
+  if (supabase) {
+    const { error } = await supabase.from("orders").insert({
+      id: order.id,
+      name: order.name,
+      phone: order.phone,
+      mode: order.mode,
+      table_no: order.table ?? null,
+      items: order.items,
+      notes: order.notes ?? null,
+      payment: order.payment ?? null,
+      total: order.total,
+      status: order.status,
+      created_at: order.createdAt,
+    });
+    if (error) throw new Error(error.message);
+    return order;
+  }
+
   store.set(order.id, order);
   return order;
 }
 
-export function getOrder(id: string) {
+export async function getOrder(id: string): Promise<Order | null> {
+  if (supabase) {
+    const { data } = await supabase.from("orders").select("*").eq("id", id).maybeSingle();
+    return data ? rowToOrder(data as OrderRow) : null;
+  }
   return store.get(id) ?? null;
 }
 
 /** All orders, oldest first (kitchen FIFO queue). */
-export function listOrders(): Order[] {
+export async function listOrders(): Promise<Order[]> {
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .order("created_at", { ascending: true });
+    if (error) throw new Error(error.message);
+    return (data as OrderRow[]).map(rowToOrder);
+  }
   return Array.from(store.values()).sort((a, b) =>
     a.createdAt < b.createdAt ? -1 : 1,
   );
 }
 
-export function updateOrderStatus(id: string, status: OrderStatus): Order | null {
+export async function updateOrderStatus(
+  id: string,
+  status: OrderStatus,
+): Promise<Order | null> {
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("orders")
+      .update({ status })
+      .eq("id", id)
+      .select("*")
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    return data ? rowToOrder(data as OrderRow) : null;
+  }
   const order = store.get(id);
   if (!order) return null;
   order.status = status;

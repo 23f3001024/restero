@@ -1,6 +1,5 @@
 "use client";
 
-import Cursor from "./Cursor";
 import Navbar from "./Navbar";
 import MobileBar from "./MobileBar";
 import GlobalScanner from "./GlobalScanner";
@@ -11,7 +10,6 @@ import Footer from "./Footer";
 export default function SiteFrame({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Cursor />
       <Navbar />
       <MobileBar />
       <GlobalScanner />
