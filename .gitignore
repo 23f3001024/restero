@@ -3,6 +3,9 @@
 /out
 .DS_Store
 *.pem
-.env*.local
+# env files — never commit secrets (examples are kept)
+.env
+.env.*
+!.env*.example
 npm-debug.log*
 next-env.d.ts
