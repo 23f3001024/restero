@@ -83,6 +83,39 @@ body {
   color: transparent;
 }
 
+/* ---------- Legal pages (privacy / terms) ---------- */
+.legal h2 {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.4rem;
+  color: var(--charcoal);
+  margin-top: 2.25rem;
+  margin-bottom: 0.6rem;
+}
+.legal h2:first-child {
+  margin-top: 0;
+}
+.legal p {
+  margin-bottom: 0.9rem;
+  line-height: 1.75;
+  color: #4a4a4a;
+}
+.legal ul {
+  margin: 0 0 1rem 1.2rem;
+  list-style: disc;
+}
+.legal li {
+  margin-bottom: 0.4rem;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+.legal a {
+  color: var(--crimson);
+  text-decoration: underline;
+}
+.legal strong {
+  color: var(--charcoal);
+}
+
 /* Thin engraved luxury label */
 .eyebrow {
   font-family: var(--font-montserrat), sans-serif;

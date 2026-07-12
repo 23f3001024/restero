@@ -130,12 +130,12 @@ export default function Footer() {
             </span>
           </p>
           <div className="flex gap-6">
-            <a href="#" className="font-body text-xs text-cream/50 transition-colors hover:text-gold">
+            <Link href="/privacy" className="font-body text-xs text-cream/50 transition-colors hover:text-gold">
               Privacy Policy
-            </a>
-            <a href="#" className="font-body text-xs text-cream/50 transition-colors hover:text-gold">
-              Terms of Service
-            </a>
+            </Link>
+            <Link href="/terms" className="font-body text-xs text-cream/50 transition-colors hover:text-gold">
+              Terms &amp; Conditions
+            </Link>
             <Link
               href="/tables"
               className="font-body text-xs text-cream/40 transition-colors hover:text-gold"
