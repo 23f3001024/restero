@@ -3,6 +3,7 @@
  * otherwise falls back to an in-memory Map so the flow works with zero setup.
  */
 import { supabase } from "./supabase";
+import { priceCatalog } from "./menu";
 
 export type OrderLine = { name: string; price: number; qty: number };
 
@@ -48,11 +49,6 @@ export const ORDER_STATUSES: OrderStatus[] = [
 
 const store = new Map<string, Order>();
 
-// Uses the first (base) price so multi-price items like "₹299 / 349 / 399"
-// don't collapse into a single concatenated number.
-export const priceToNumber = (price: string) =>
-  Number(price.match(/[\d.]+/)?.[0]) || 0;
-
 function makeOrderId() {
   const stamp = Date.now().toString(36).toUpperCase().slice(-4);
   const rand = Math.random().toString(36).toUpperCase().slice(2, 5);
@@ -97,9 +93,20 @@ const rowToOrder = (r: OrderRow): Order => ({
 });
 
 export async function saveOrder(input: OrderInput): Promise<Order> {
-  const total = input.items.reduce((sum, it) => sum + it.price * it.qty, 0);
+  // Never trust client-supplied prices: look each item up in the menu, reject
+  // anything unknown, and clamp quantities. This blocks price tampering.
+  const catalog = priceCatalog();
+  const items = input.items.map((it) => {
+    const price = catalog.get(it.name);
+    if (price == null) throw new Error(`Unknown menu item: ${it.name}`);
+    const qty = Math.min(99, Math.max(1, Math.floor(Number(it.qty) || 1)));
+    return { name: it.name, price, qty };
+  });
+  const total = items.reduce((sum, it) => sum + it.price * it.qty, 0);
+
   const order: Order = {
     ...input,
+    items,
     id: makeOrderId(),
     total,
     createdAt: new Date().toISOString(),

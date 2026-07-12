@@ -30,12 +30,20 @@ export async function POST(req: Request) {
   // Small delay to make the luxury loading state feel intentional.
   await new Promise((r) => setTimeout(r, 900));
 
-  const booking = await saveBooking(input);
-  return NextResponse.json({
-    id: booking.id,
-    date: booking.date,
-    time: booking.time,
-    guests: booking.guests,
-    name: booking.name,
-  });
+  try {
+    const booking = await saveBooking(input);
+    return NextResponse.json({
+      id: booking.id,
+      date: booking.date,
+      time: booking.time,
+      guests: booking.guests,
+      name: booking.name,
+    });
+  } catch (err) {
+    console.error("[bookings] save failed:", err);
+    return NextResponse.json(
+      { error: "Could not save your reservation. Please try again." },
+      { status: 500 },
+    );
+  }
 }

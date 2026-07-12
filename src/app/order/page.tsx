@@ -23,22 +23,9 @@ import {
 } from "lucide-react";
 import QRCode from "qrcode";
 import SmartImage from "@/components/ui/SmartImage";
-import { menu, menuCategories, BRAND, type MenuCategory, type MenuItem } from "@/lib/data";
-import { priceToNumber, type OrderLine } from "@/lib/orders";
-
-// Cart-line label for a chosen variant, e.g. "Chilly Prawn" or "Coffee (Latte)".
-function variantName(item: MenuItem, label: string) {
-  const name = item.name;
-  if (name.includes("(")) return `${name.slice(0, name.indexOf("(")).trim()} (${label})`;
-  const first = name.split(" / ")[0].trim(); // "Chilly Chicken"
-  const base = first.split(" ").slice(0, -1).join(" ") || first; // "Chilly"
-  return `${base} ${label}`;
-}
-
-// key used in the cart for an item (+ chosen variant, when it has one).
-function cartKey(item: MenuItem, label?: string) {
-  return item.variants?.length && label ? variantName(item, label) : item.name;
-}
+import { menu, menuCategories, BRAND, type MenuCategory } from "@/lib/data";
+import { cartKey, priceCatalog } from "@/lib/menu";
+import type { OrderLine } from "@/lib/orders";
 
 type Cart = Record<string, number>;
 type Mode = "dine-in" | "takeaway";
@@ -82,17 +69,7 @@ export default function OrderPage() {
   const [variantSel, setVariantSel] = useState<Record<string, string>>({});
 
   // Map every possible cart line (incl. each variant) to its price.
-  const catalog = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const item of menu) {
-      if (item.variants?.length) {
-        for (const v of item.variants) m.set(variantName(item, v.label), v.price);
-      } else {
-        m.set(item.name, priceToNumber(item.price));
-      }
-    }
-    return m;
-  }, []);
+  const catalog = useMemo(() => priceCatalog(), []);
 
   // Read the table number encoded in the QR the guest scanned (/order?table=7),
   // and any dish passed from the homepage menu (/order?add=Chilly%20Paneer).

@@ -11,8 +11,10 @@
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-const url = process.env.SUPABASE_URL;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+// Server-only secret. Accepts the new sb_secret_ key or the legacy service_role JWT.
+const serviceKey =
+  process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export const supabase: SupabaseClient | null =
   url && serviceKey

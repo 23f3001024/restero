@@ -51,17 +51,25 @@ export async function POST(req: Request) {
   if (error) return NextResponse.json({ error }, { status: 422 });
 
   await new Promise((r) => setTimeout(r, 800));
-  const order = await saveOrder(body as OrderInput);
 
-  return NextResponse.json({
-    id: order.id,
-    total: order.total,
-    mode: order.mode,
-    table: order.table ?? null,
-    items: order.items.length,
-    name: order.name,
-    paymentMethod: order.payment?.method ?? null,
-    paymentStatus: order.payment?.status ?? "pending",
-    paymentReference: order.payment?.reference ?? null,
-  });
+  try {
+    const order = await saveOrder(body as OrderInput);
+    return NextResponse.json({
+      id: order.id,
+      total: order.total,
+      mode: order.mode,
+      table: order.table ?? null,
+      items: order.items.length,
+      name: order.name,
+      paymentMethod: order.payment?.method ?? null,
+      paymentStatus: order.payment?.status ?? "pending",
+      paymentReference: order.payment?.reference ?? null,
+    });
+  } catch (err) {
+    console.error("[orders] save failed:", err);
+    return NextResponse.json(
+      { error: "Could not place your order. Please try again." },
+      { status: 500 },
+    );
+  }
 }
